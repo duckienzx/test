@@ -28,10 +28,10 @@
             pointer-events: none;
         }
 
-        /* --- NÚT ĐIỀU KHIỂN NHẠC (MỚI) --- */
+        /* --- NÚT ĐIỀU KHIỂN NHẠC --- */
         .music-control {
             position: fixed;
-            bottom: 20px;
+            bottom: 30px; /* Đẩy lên cao chút để tránh chạm nhầm */
             left: 20px;
             z-index: 100;
             width: 50px;
@@ -134,6 +134,7 @@
             flex-direction: column; 
             align-items: center; 
             gap: 40px; 
+            padding-bottom: 100px; /* Thêm khoảng trống dưới cùng để không bị nút nhạc che */
         }
 
         .content-box {
@@ -186,24 +187,75 @@
 
         /* Style danh sách */
         .list-group { margin-bottom: 30px; padding: 0 10px; text-align: left;}
+        
         .category-title {
             color: #FDC830; font-size: 1.4rem; font-weight: 700;
             text-transform: uppercase; margin-bottom: 15px;
             border-left: 5px solid #FDC830; padding-left: 15px;
             background: linear-gradient(90deg, rgba(253, 200, 48, 0.1), transparent);
         }
+        
         .item-list { list-style: none; padding-left: 10px; }
+        
         .item-list li {
-            font-size: 1.2rem; color: #eee; margin-bottom: 15px;
-            display: flex; align-items: flex-start; line-height: 1.5;
-            padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
+            font-size: 1.2rem; 
+            color: #eee; 
+            margin-bottom: 15px;
+            display: flex;  /* Mặc định là nằm ngang */
+            align-items: flex-start; 
+            line-height: 1.5;
+            padding-bottom: 10px; 
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
         }
-        .item-list li strong { color: #fff; min-width: 130px; display: inline-block; }
+        
+        .item-list li strong { 
+            color: #fff; 
+            min-width: 130px; /* Chiều rộng cố định cho tiêu đề */
+            display: inline-block; 
+            flex-shrink: 0; /* Không cho tiêu đề bị co lại */
+        }
+        
         .item-list li span { color: #ddd; font-weight: 400; }
+        
         .item-list li::before {
             content: "✔"; color: #00ff00; font-size: 1.2rem;
             margin-right: 15px; margin-top: 2px;
+            flex-shrink: 0;
         }
+
+        /* ===== PHẦN QUAN TRỌNG: CHỈNH SỬA CHO ĐIỆN THOẠI (DỌC) ===== */
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 25px 15px; /* Giảm lề hộp cho rộng chỗ viết */
+            }
+
+            .box-title {
+                font-size: 1.5rem; /* Giảm cỡ chữ tiêu đề */
+            }
+
+            .item-list li {
+                flex-direction: column; /* Xếp chồng: Trên - Dưới */
+                align-items: flex-start;
+            }
+
+            .item-list li strong {
+                width: 100%; /* Tiêu đề chiếm hết dòng */
+                margin-bottom: 5px; /* Tạo khoảng cách với nội dung dưới */
+                color: #FDC830; /* Đổi màu vàng cho dễ phân biệt */
+            }
+
+            .item-list li::before {
+                display: none; /* Ẩn dấu tích xanh đi cho đỡ chật màn hình */
+            }
+            
+            /* Thêm lại dấu tích vào thẳng trong thẻ strong cho gọn */
+            .item-list li strong::before {
+                content: "✔ ";
+                color: #00ff00;
+            }
+        }
+        /* ========================================================== */
+
         .signature {
             margin-top: 40px; text-align: center; font-style: italic;
             color: #bbb; font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.1);
@@ -220,7 +272,9 @@
     </audio>
 
     <div class="music-control" id="musicBtn" title="Bật/Tắt Nhạc">
-        <span class="music-icon" id="musicIcon">🔇</span> </div>
+        <span class="music-icon" id="musicIcon">🔇</span>
+    </div>
+
     <div class="hero-section">
         <div class="year">2026</div>
         <div class="greeting" id="greeting-text">CHÚC MỪNG NĂM MỚI</div>
@@ -236,7 +290,7 @@
                 <h3 class="category-title">Vật Liệu & Dụng Cụ</h3>
                 <ul class="item-list">
                     <li><strong>Tre:</strong> <span>Dùng làm cọc chính, khung mái và cổng trại.</span></li>
-                    <li><strong>Ốc Vít:</strong> <span>Khoan bắt các mối nối chịu lực.</span></li>
+                    <li><strong>Ốc Vít:</strong> <span>Khoan bắt các mối nối chịu lực (nhanh, chắc).</span></li>
                     <li><strong>Dây Thép:</strong> <span>Gia cố các điểm nối, buộc kèo.</span></li>
                     <li><strong>Dụng Cụ:</strong> <span>Máy khoan, tua vít, kìm, búa, cưa.</span></li>
                 </ul>
@@ -269,7 +323,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
     <script>
-        // --- 1. SETUP THREE.JS (SAO 3D) ---
+        // --- 1. SETUP SAO 3D ---
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x1a0000, 0.002); 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -317,71 +371,48 @@
         }, { threshold: 0.2 });
         document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
 
-        // ============================================
-        // 4. HỆ THỐNG ĐIỀU KHIỂN ÂM THANH THÔNG MINH
-        // ============================================
+        // --- 4. LOGIC NHẠC ---
         document.addEventListener('DOMContentLoaded', function() {
             var audio = document.getElementById("nhacNen");
             var video = document.getElementById("traiVideo");
             var btn = document.getElementById("musicBtn");
             var icon = document.getElementById("musicIcon");
             
-            // Cài đặt âm lượng nhỏ (30%)
-            audio.volume = 0.3;
+            audio.volume = 0.3; // Âm lượng 30%
 
-            // --- A. LOGIC BẬT/TẮT NHẠC BẰNG NÚT ---
-            var isMusicPlaying = false; // Trạng thái nhạc
+            var isMusicPlaying = false;
 
             btn.addEventListener('click', function() {
                 if (isMusicPlaying) {
                     audio.pause();
                     isMusicPlaying = false;
-                    icon.innerText = "🔇"; // Biểu tượng tắt
+                    icon.innerText = "🔇";
                     btn.style.animation = "none";
                 } else {
                     audio.play();
                     isMusicPlaying = true;
-                    icon.innerText = "🔊"; // Biểu tượng bật
+                    icon.innerText = "🔊";
                     btn.style.animation = "pulse 2s infinite";
                 }
             });
 
-            // --- B. LOGIC TỰ ĐỘNG TẮT NHẠC KHI XEM VIDEO ---
-            
-            // Khi video bắt đầu chạy -> Tắt nhạc
-            video.addEventListener('play', function() {
-                if (!audio.paused) {
-                    audio.pause();
-                    // Lưu ý: Không đổi trạng thái isMusicPlaying để khi tắt video nhạc tự bật lại
-                }
-            });
+            // Tự tắt nhạc khi xem video
+            video.addEventListener('play', function() { if (!audio.paused) { audio.pause(); } });
+            video.addEventListener('pause', function() { if (isMusicPlaying) { audio.play(); } });
+            video.addEventListener('ended', function() { if (isMusicPlaying) { audio.play(); } });
 
-            // Khi video dừng hoặc hết -> Bật lại nhạc (nếu trước đó đang bật)
-            video.addEventListener('pause', function() {
-                if (isMusicPlaying) { audio.play(); }
-            });
-            video.addEventListener('ended', function() {
-                if (isMusicPlaying) { audio.play(); }
-            });
-
-            // --- C. MẸO TỰ ĐỘNG BẬT NHẠC LẦN ĐẦU ---
+            // Auto-play khi chạm vào màn hình
             function tryAutoPlay() {
                 if (!isMusicPlaying) {
                     audio.play().then(() => {
-                        console.log("Auto-play thành công!");
                         isMusicPlaying = true;
                         icon.innerText = "🔊";
-                        ['click', 'scroll', 'touchstart'].forEach(evt => 
-                            document.removeEventListener(evt, tryAutoPlay)
-                        );
-                    }).catch(err => console.log("Chờ tương tác..."));
+                        btn.style.animation = "pulse 2s infinite";
+                        ['click', 'scroll', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay));
+                    }).catch(err => {});
                 }
             }
-            
-            // Bắt sự kiện người dùng chạm vào web để bật nhạc
-            ['click', 'scroll', 'touchstart'].forEach(evt => 
-                document.addEventListener(evt, tryAutoPlay)
-            );
+            ['click', 'scroll', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
         });
     </script>
 </body>
