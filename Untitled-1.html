@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ke Hoach Trai Xuan 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- THIẾT LẬP CHUNG --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            /* Nền Đỏ Rượu -> Đen */
+            background: radial-gradient(circle at center, #5e0000 0%, #290000 40%, #000000 100%);
+            background-attachment: fixed; 
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            overflow-x: hidden; 
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --- NÚT ĐIỀU KHIỂN NHẠC (MỚI) --- */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FDC830;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        
+        .music-control:hover {
+            background: rgba(255, 215, 0, 0.5);
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(253, 200, 48, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0); }
+        }
+
+        /* --- PHẦN 1: MÀN HÌNH CHÀO --- */
+        .hero-section {
+            position: relative;
+            height: 100vh; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .year {
+            font-weight: 900; 
+            font-size: 25vw; 
+            line-height: 0.9;
+            letter-spacing: -4px; 
+            color: transparent;
+            background: linear-gradient(180deg, #FFFFFF 20%, #FDC830 50%, #F37335 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9));
+            margin-bottom: 20px;
+        }
+
+        .greeting {
+            font-weight: 900; 
+            font-size: 6vw; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            background: linear-gradient(to bottom, #ffffff 30%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+            min-height: 2em;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+        
+        .arrow { font-size: 1.5rem; color: #FDC830; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* --- PHẦN 2: NỘI DUNG --- */
+        .content-section {
+            position: relative;
+            min-height: 100vh; 
+            padding: 50px 20px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            gap: 40px; 
+        }
+
+        .content-box {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(30, 0, 0, 0.85); 
+            backdrop-filter: blur(20px); 
+            border: 2px solid rgba(255, 215, 0, 0.5); 
+            border-radius: 30px; 
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6); 
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .content-box.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .box-title {
+            font-weight: 900;
+            font-size: 2rem; 
+            color: #FDC830; 
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-bottom: 3px solid rgba(255, 215, 0, 0.3);
+            display: inline-block;
+            padding-bottom: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* --- STYLE CHO VIDEO --- */
+        .video-container {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Style danh sách */
+        .list-group { margin-bottom: 30px; padding: 0 10px; text-align: left;}
+        .category-title {
+            color: #FDC830; font-size: 1.4rem; font-weight: 700;
+            text-transform: uppercase; margin-bottom: 15px;
+            border-left: 5px solid #FDC830; padding-left: 15px;
+            background: linear-gradient(90deg, rgba(253, 200, 48, 0.1), transparent);
+        }
+        .item-list { list-style: none; padding-left: 10px; }
+        .item-list li {
+            font-size: 1.2rem; color: #eee; margin-bottom: 15px;
+            display: flex; align-items: flex-start; line-height: 1.5;
+            padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        .item-list li strong { color: #fff; min-width: 130px; display: inline-block; }
+        .item-list li span { color: #ddd; font-weight: 400; }
+        .item-list li::before {
+            content: "✔"; color: #00ff00; font-size: 1.2rem;
+            margin-right: 15px; margin-top: 2px;
+        }
+        .signature {
+            margin-top: 40px; text-align: center; font-style: italic;
+            color: #bbb; font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <audio id="nhacNen" loop hidden>
+        <source src="nhac.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-control" id="musicBtn" title="Bật/Tắt Nhạc">
+        <span class="music-icon" id="musicIcon">🔇</span> </div>
+    <div class="hero-section">
+        <div class="year">2026</div>
+        <div class="greeting" id="greeting-text">CHÚC MỪNG NĂM MỚI</div>
+        <div class="scroll-indicator"><span class="arrow">▼</span></div>
+    </div>
+
+    <div class="content-section">
+        
+        <div class="content-box scroll-reveal">
+            <h2 class="box-title">Danh Sách Vật Tư</h2>
+            
+            <div class="list-group">
+                <h3 class="category-title">Vật Liệu & Dụng Cụ</h3>
+                <ul class="item-list">
+                    <li><strong>Tre:</strong> <span>Dùng làm cọc chính, khung mái và cổng trại.</span></li>
+                    <li><strong>Ốc Vít:</strong> <span>Khoan bắt các mối nối chịu lực.</span></li>
+                    <li><strong>Dây Thép:</strong> <span>Gia cố các điểm nối, buộc kèo.</span></li>
+                    <li><strong>Dụng Cụ:</strong> <span>Máy khoan, tua vít, kìm, búa, cưa.</span></li>
+                </ul>
+            </div>
+            
+            <div class="signature">
+                Kính trình thầy cô giáo chủ nhiệm phê duyệt. <br>
+                <strong>Tập thể Lớp [Tên Lớp]</strong>
+            </div>
+        </div>
+
+        <div class="content-box scroll-reveal">
+            <h2 class="box-title">Video quá trình làm trại</h2>
+            
+            <div class="video-container">
+                <video id="traiVideo" controls playsinline>
+                    <source src="video.mp4" type="video/mp4">
+                    Trình duyệt của bạn không hỗ trợ thẻ video.
+                </video>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px; color: #bbb; font-style: italic;">
+                (Nhạc nền sẽ tự tắt khi bạn xem video ❤️)
+            </p>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <script>
+        // --- 1. SETUP THREE.JS (SAO 3D) ---
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x1a0000, 0.002); 
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio>2?2:window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+        const geometry = new THREE.BufferGeometry();
+        const count = 1000;
+        const positions = new Float32Array(count*3);
+        const colors = new Float32Array(count*3);
+        for(let i=0; i<count*3; i+=3) {
+            positions[i]=(Math.random()-0.5)*1500;
+            positions[i+1]=(Math.random()-0.5)*1500;
+            positions[i+2]=(Math.random()-0.5)*1500;
+            let rand=Math.random();
+            if(rand>0.5){colors[i]=1;colors[i+1]=0.84;colors[i+2]=0;}
+            else{colors[i]=1;colors[i+1]=1;colors[i+2]=1;}
+        }
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const stars = new THREE.Points(geometry, new THREE.PointsMaterial({size: 2.5, vertexColors: true, transparent: true, opacity: 0.9}));
+        scene.add(stars);
+        camera.position.z = 400;
+        function animate(){requestAnimationFrame(animate);stars.rotation.y+=0.0005;renderer.render(scene, camera);}
+        animate();
+        window.addEventListener('resize', ()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
+
+        // --- 2. TEXT ANIMATION ---
+        const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "새해 복 많이 받으세요", "あけましておめでとう"];
+        let index = 0; const textEl = document.getElementById('greeting-text');
+        setInterval(() => {
+            gsap.to(textEl, {opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
+                index = (index + 1) % greetings.length; textEl.innerText = greetings[index];
+                gsap.to(textEl, { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" });
+            }});
+        }, 3000);
+        gsap.from(".year", { duration: 2, y: -50, opacity: 0, ease: "power3.out" });
+
+        // --- 3. SCROLL REVEAL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
+
+        // ============================================
+        // 4. HỆ THỐNG ĐIỀU KHIỂN ÂM THANH THÔNG MINH
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.getElementById("nhacNen");
+            var video = document.getElementById("traiVideo");
+            var btn = document.getElementById("musicBtn");
+            var icon = document.getElementById("musicIcon");
+            
+            // Cài đặt âm lượng nhỏ (30%)
+            audio.volume = 0.3;
+
+            // --- A. LOGIC BẬT/TẮT NHẠC BẰNG NÚT ---
+            var isMusicPlaying = false; // Trạng thái nhạc
+
+            btn.addEventListener('click', function() {
+                if (isMusicPlaying) {
+                    audio.pause();
+                    isMusicPlaying = false;
+                    icon.innerText = "🔇"; // Biểu tượng tắt
+                    btn.style.animation = "none";
+                } else {
+                    audio.play();
+                    isMusicPlaying = true;
+                    icon.innerText = "🔊"; // Biểu tượng bật
+                    btn.style.animation = "pulse 2s infinite";
+                }
+            });
+
+            // --- B. LOGIC TỰ ĐỘNG TẮT NHẠC KHI XEM VIDEO ---
+            
+            // Khi video bắt đầu chạy -> Tắt nhạc
+            video.addEventListener('play', function() {
+                if (!audio.paused) {
+                    audio.pause();
+                    // Lưu ý: Không đổi trạng thái isMusicPlaying để khi tắt video nhạc tự bật lại
+                }
+            });
+
+            // Khi video dừng hoặc hết -> Bật lại nhạc (nếu trước đó đang bật)
+            video.addEventListener('pause', function() {
+                if (isMusicPlaying) { audio.play(); }
+            });
+            video.addEventListener('ended', function() {
+                if (isMusicPlaying) { audio.play(); }
+            });
+
+            // --- C. MẸO TỰ ĐỘNG BẬT NHẠC LẦN ĐẦU ---
+            function tryAutoPlay() {
+                if (!isMusicPlaying) {
+                    audio.play().then(() => {
+                        console.log("Auto-play thành công!");
+                        isMusicPlaying = true;
+                        icon.innerText = "🔊";
+                        ['click', 'scroll', 'touchstart'].forEach(evt => 
+                            document.removeEventListener(evt, tryAutoPlay)
+                        );
+                    }).catch(err => console.log("Chờ tương tác..."));
+                }
+            }
+            
+            // Bắt sự kiện người dùng chạm vào web để bật nhạc
+            ['click', 'scroll', 'touchstart'].forEach(evt => 
+                document.addEventListener(evt, tryAutoPlay)
+            );
+        });
+    </script>
+</body>
+</html>
