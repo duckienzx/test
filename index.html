@@ -31,7 +31,7 @@
         /* --- NÚT ĐIỀU KHIỂN NHẠC --- */
         .music-control {
             position: fixed;
-            bottom: 30px; /* Đẩy lên cao chút để tránh chạm nhầm */
+            bottom: 30px;
             left: 20px;
             z-index: 100;
             width: 50px;
@@ -78,15 +78,20 @@
 
         .year {
             font-weight: 900; 
-            font-size: 25vw; 
-            line-height: 0.9;
-            letter-spacing: -4px; 
+            font-size: 24vw; /* Giảm nhẹ xíu từ 25 xuống 24 cho an toàn */
+            
+            /* --- SỬA LỖI CẮT CHỮ Ở ĐÂY --- */
+            line-height: 1.1; /* Tăng từ 0.9 lên 1.1 để chữ thoáng hơn */
+            padding: 10px;    /* Thêm đệm để bóng đổ không bị cắt */
+            /* ----------------------------- */
+            
+            letter-spacing: -2px; /* Giảm dính chữ lại chút cho dễ đọc trên mobile */
             color: transparent;
             background: linear-gradient(180deg, #FFFFFF 20%, #FDC830 50%, #F37335 100%);
             -webkit-background-clip: text;
             background-clip: text;
             filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9));
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .greeting {
@@ -104,6 +109,7 @@
             align-items: center;
             justify-content: center;
             width: 90%;
+            padding: 0 10px; /* Thêm đệm 2 bên để chữ không sát mép màn hình */
         }
 
         .scroll-indicator {
@@ -134,7 +140,7 @@
             flex-direction: column; 
             align-items: center; 
             gap: 40px; 
-            padding-bottom: 100px; /* Thêm khoảng trống dưới cùng để không bị nút nhạc che */
+            padding-bottom: 100px;
         }
 
         .content-box {
@@ -201,7 +207,7 @@
             font-size: 1.2rem; 
             color: #eee; 
             margin-bottom: 15px;
-            display: flex;  /* Mặc định là nằm ngang */
+            display: flex;  
             align-items: flex-start; 
             line-height: 1.5;
             padding-bottom: 10px; 
@@ -210,9 +216,9 @@
         
         .item-list li strong { 
             color: #fff; 
-            min-width: 130px; /* Chiều rộng cố định cho tiêu đề */
+            min-width: 130px; 
             display: inline-block; 
-            flex-shrink: 0; /* Không cho tiêu đề bị co lại */
+            flex-shrink: 0; 
         }
         
         .item-list li span { color: #ddd; font-weight: 400; }
@@ -223,38 +229,43 @@
             flex-shrink: 0;
         }
 
-        /* ===== PHẦN QUAN TRỌNG: CHỈNH SỬA CHO ĐIỆN THOẠI (DỌC) ===== */
+        /* ===== ĐIỆN THOẠI (DỌC) ===== */
         @media (max-width: 768px) {
             .content-box {
-                padding: 25px 15px; /* Giảm lề hộp cho rộng chỗ viết */
+                padding: 25px 15px; 
             }
 
             .box-title {
-                font-size: 1.5rem; /* Giảm cỡ chữ tiêu đề */
+                font-size: 1.5rem; 
+            }
+
+            /* Fix lỗi 2026 trên màn hình siêu nhỏ nếu cần */
+            .year {
+                font-size: 23vw;
+                letter-spacing: -1px;
             }
 
             .item-list li {
-                flex-direction: column; /* Xếp chồng: Trên - Dưới */
+                flex-direction: column; 
                 align-items: flex-start;
             }
 
             .item-list li strong {
-                width: 100%; /* Tiêu đề chiếm hết dòng */
-                margin-bottom: 5px; /* Tạo khoảng cách với nội dung dưới */
-                color: #FDC830; /* Đổi màu vàng cho dễ phân biệt */
+                width: 100%; 
+                margin-bottom: 5px; 
+                color: #FDC830; 
             }
 
             .item-list li::before {
-                display: none; /* Ẩn dấu tích xanh đi cho đỡ chật màn hình */
+                display: none; 
             }
             
-            /* Thêm lại dấu tích vào thẳng trong thẻ strong cho gọn */
             .item-list li strong::before {
                 content: "✔ ";
                 color: #00ff00;
             }
         }
-        /* ========================================================== */
+        /* ============================ */
 
         .signature {
             margin-top: 40px; text-align: center; font-style: italic;
@@ -401,7 +412,7 @@
             video.addEventListener('pause', function() { if (isMusicPlaying) { audio.play(); } });
             video.addEventListener('ended', function() { if (isMusicPlaying) { audio.play(); } });
 
-            // Auto-play khi chạm vào màn hình
+            // Auto-play
             function tryAutoPlay() {
                 if (!isMusicPlaying) {
                     audio.play().then(() => {
