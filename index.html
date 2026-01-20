@@ -286,6 +286,7 @@
         <source src="nhac.mp3" type="audio/mpeg">
     </audio>
 
+
     <div class="music-control" id="musicBtn" title="Bật/Tắt Nhạc">
         <span class="music-icon" id="musicIcon">🔇</span>
     </div>
@@ -393,7 +394,7 @@
             var btn = document.getElementById("musicBtn");
             var icon = document.getElementById("musicIcon");
             
-            audio.volume = 0.3; // Âm lượng 30%
+            audio.volume = 0.09; // Âm lượng 30%
 
             var isMusicPlaying = false;
 
@@ -428,7 +429,19 @@
                 }
             }
             ['click', 'scroll', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
-        });
+
+            document.addEventListener("visibilitychange", function() {
+                if (document.hidden) {
+                    // Khi thoát ra -> Tạm dừng nhạc (nhưng không đổi biến trạng thái)
+                    audio.pause(); 
+                } else {
+                    // Khi vào lại -> Kiểm tra xem lúc nãy nhạc có đang bật không
+                    if (isMusicPlaying) { 
+                        audio.play(); 
+                    }
+                }
+            });
+            });
     </script>
 </body>
-</html>
+</html> 
