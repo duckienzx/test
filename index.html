@@ -14,10 +14,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. CSS GỐC CỦA BẠN (KHÔNG ĐỔI) --- */
+        /* --- THIẾT LẬP CHUNG --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
+            /* Nền Đỏ Rượu -> Đen */
             background: radial-gradient(circle at center, #5e0000 0%, #290000 40%, #000000 100%);
             background-attachment: fixed; 
             font-family: 'Montserrat', sans-serif;
@@ -31,30 +32,18 @@
             pointer-events: none;
         }
 
+        /* --- NÚT ĐIỀU KHIỂN NHẠC --- */
         .music-control {
-            position: fixed;
-            bottom: 30px;
-            left: 20px;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
+            position: fixed; bottom: 30px; left: 20px; z-index: 100;
+            width: 50px; height: 50px;
             background: rgba(255, 215, 0, 0.2);
-            border: 2px solid #FDC830;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s;
-            animation: pulse 2s infinite;
+            border: 2px solid #FDC830; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; backdrop-filter: blur(5px);
+            transition: all 0.3s; animation: pulse 2s infinite;
         }
         
-        .music-control:hover {
-            background: rgba(255, 215, 0, 0.5);
-            transform: scale(1.1);
-        }
-
+        .music-control:hover { background: rgba(255, 215, 0, 0.5); transform: scale(1.1); }
         .music-icon { font-size: 24px; line-height: 1; }
 
         @keyframes pulse {
@@ -63,57 +52,34 @@
             100% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0); }
         }
 
+        /* --- PHẦN 1: MÀN HÌNH CHÀO --- */
         .hero-section {
-            position: relative;
-            height: 100vh; 
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+            position: relative; height: 100vh; width: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;
         }
 
         .year {
-            font-weight: 900; 
-            font-size: 24vw; 
-            line-height: 1.1; 
-            padding: 10px;    
-            letter-spacing: -2px; 
-            color: transparent;
+            font-weight: 900; font-size: 24vw; 
+            line-height: 1.1; padding: 10px;    
+            letter-spacing: -2px; color: transparent;
             background: linear-gradient(180deg, #FFFFFF 20%, #FDC830 50%, #F37335 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9));
-            margin-bottom: 10px;
+            -webkit-background-clip: text; background-clip: text;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9)); margin-bottom: 10px;
         }
 
         .greeting {
-            font-weight: 900; 
-            font-size: 6vw; 
-            text-transform: uppercase; 
-            letter-spacing: 2px;
+            font-weight: 900; font-size: 6vw; text-transform: uppercase; letter-spacing: 2px;
             background: linear-gradient(to bottom, #ffffff 30%, #ffd700 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
-            min-height: 2em;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 90%;
-            padding: 0 10px; 
+            min-height: 2em; text-align: center;
+            display: flex; align-items: center; justify-content: center;
+            width: 90%; padding: 0 10px; 
         }
 
         .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0.7;
-            animation: bounce 2s infinite;
+            position: absolute; bottom: 30px; display: flex; flex-direction: column; align-items: center;
+            opacity: 0.7; animation: bounce 2s infinite;
         }
         
         .arrow { font-size: 1.5rem; color: #FDC830; }
@@ -124,65 +90,37 @@
             60% {transform: translateY(-5px);}
         }
 
+        /* --- PHẦN 2: NỘI DUNG --- */
         .content-section {
-            position: relative;
-            min-height: 100vh; 
-            padding: 50px 20px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            gap: 40px; 
-            padding-bottom: 100px;
+            position: relative; min-height: 100vh; padding: 50px 20px; z-index: 10;
+            display: flex; flex-direction: column; align-items: center; gap: 40px; padding-bottom: 100px;
         }
 
         .content-box {
-            width: 100%;
-            max-width: 800px;
-            background: rgba(30, 0, 0, 0.85); 
-            backdrop-filter: blur(20px); 
-            border: 2px solid rgba(255, 215, 0, 0.5); 
-            border-radius: 30px; 
-            padding: 40px 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6); 
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease;
+            width: 100%; max-width: 800px;
+            background: rgba(30, 0, 0, 0.85); backdrop-filter: blur(20px); 
+            border: 2px solid rgba(255, 215, 0, 0.5); border-radius: 30px; 
+            padding: 40px 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); 
+            opacity: 0; transform: translateY(50px); transition: all 1s ease;
         }
 
-        .content-box.visible {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .content-box.visible { transform: translateY(0); opacity: 1; }
 
         .box-title {
-            font-weight: 900;
-            font-size: 2rem; 
-            color: #FDC830; 
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            border-bottom: 3px solid rgba(255, 215, 0, 0.3);
-            display: inline-block;
-            padding-bottom: 10px;
-            text-align: center;
-            width: 100%;
+            font-weight: 900; font-size: 2rem; color: #FDC830; margin-bottom: 30px;
+            text-transform: uppercase; border-bottom: 3px solid rgba(255, 215, 0, 0.3);
+            display: inline-block; padding-bottom: 10px; text-align: center; width: 100%;
         }
 
+        /* --- STYLE CHO VIDEO --- */
         .video-container {
-            width: 100%;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background: #000;
+            width: 100%; border-radius: 15px; overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: #000;
         }
 
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        video { width: 100%; height: auto; display: block; }
 
+        /* Style danh sách */
         .list-group { margin-bottom: 30px; padding: 0 10px; text-align: left;}
         
         .category-title {
@@ -195,29 +133,16 @@
         .item-list { list-style: none; padding-left: 10px; }
         
         .item-list li {
-            font-size: 1.2rem; 
-            color: #eee; 
-            margin-bottom: 15px;
-            display: flex;  
-            align-items: flex-start; 
-            line-height: 1.5;
-            padding-bottom: 10px; 
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            font-size: 1.2rem; color: #eee; margin-bottom: 15px;
+            display: flex; align-items: flex-start; line-height: 1.5;
+            padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
         }
         
-        .item-list li strong { 
-            color: #fff; 
-            min-width: 130px; 
-            display: inline-block; 
-            flex-shrink: 0; 
-        }
-        
+        .item-list li strong { color: #fff; min-width: 130px; display: inline-block; flex-shrink: 0; }
         .item-list li span { color: #ddd; font-weight: 400; }
         
         .item-list li::before {
-            content: "✔"; color: #00ff00; font-size: 1.2rem;
-            margin-right: 15px; margin-top: 2px;
-            flex-shrink: 0;
+            content: "✔"; color: #00ff00; font-size: 1.2rem; margin-right: 15px; margin-top: 2px; flex-shrink: 0;
         }
 
         @media (max-width: 768px) {
@@ -236,84 +161,98 @@
             padding-top: 20px;
         }
 
-        /* --- 2. CSS CHO LÌ XÌ (MỚI THÊM VÀO) --- */
+        /* =========================================
+           PHẦN MỚI: CSS CHO BAO LÌ XÌ
+           ========================================= */
+        :root {
+            --redA: #c9151f; --redB: #7f0a10; --gold: #d4af37; --gold2: #f6e7b1; --paper: #fffdf2;
+        }
         .lixi-container {
             position: relative; width: 260px; height: 400px;
-            margin: 0 auto;
-            perspective: 1000px;
-            cursor: pointer;
+            margin: 0 auto; perspective: 1000px; cursor: pointer;
             -webkit-user-select: none; user-select: none;
+            filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
+            transition: transform .25s ease;
         }
+        .lixi-container:not(.open):hover { transform: translateY(-2px) rotateX(2deg); }
 
         .env-back {
             position: absolute; bottom: 0; width: 100%; height: 360px;
-            background: #b71c1c; border-radius: 8px; z-index: 1;
+            background: linear-gradient(160deg, var(--redA), #6a070c);
+            border-radius: 12px; z-index: 1; overflow: hidden;
+        }
+        .env-back::before {
+            content: ""; position: absolute; inset: 10px; border-radius: 10px;
+            border: 1px solid rgba(212,175,55,.55); opacity: .95; pointer-events: none;
         }
 
         .card {
-            position: absolute; width: 320px; height: 420px; bottom: 0; 
-            transform: scale(0.6) translateY(80px);
-            background: #fffdf0; border: 3px solid #d4af37; border-radius: 12px;
-            z-index: 5; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: absolute; width: 320px; height: 420px; bottom: 0;
+            left: 50%; margin-left: -160px; 
+            transform: scale(0.6) translateY(80px); 
+            background: var(--paper); border: 2px solid rgba(212,175,55,.85); border-radius: 16px;
+            z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; padding: 30px; box-sizing: border-box;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform .8s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow .8s;
             will-change: transform; backface-visibility: hidden;
-            left: 50%; margin-left: -160px; /* Căn giữa */
         }
-        .card h2 { font-family: 'Playfair Display', serif; color: #b71c1c; margin: 20px 0; font-size: 32px; }
-        .card p { font-size: 18px; color: #333; line-height: 1.6; font-weight: 600; font-family: 'Montserrat', sans-serif;}
-        .emoji { font-size: 50px; display: block; margin-bottom: 15px; }
+        .card::before {
+            content: ""; position: absolute; top: 16px; left: 20px; right: 20px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,.95), transparent); opacity: .9;
+        }
+        .emoji { font-size: 58px; display: block; margin-bottom: 10px; }
+        .card h2 {
+            font-family: 'Playfair Display', serif; color: #8b0b10; margin: 14px 0 12px;
+            font-size: 38px; letter-spacing: .3px;
+        }
+        .card p { font-size: 20px; color: #2a241f; line-height: 1.6; font-weight: 600; margin: 0; }
+        .mini { margin-top: 16px; font-family: sans-serif; letter-spacing: 2px; font-size: 12px; color: #7a5b11; opacity: .9; }
 
         .env-front {
-            position: absolute; bottom: 0; width: 100%; height: 306px; /* 85% của 360px */
-            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 6px),
-                        linear-gradient(to bottom, #d32f2f, #c62828);
-            border-radius: 0 0 8px 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            z-index: 10; pointer-events: none;
+            position: absolute; bottom: 0; width: 100%; height: 85%;
+            background: radial-gradient(120% 70% at 50% 0%, rgba(0,0,0,.25), transparent 55%),
+                        linear-gradient(to bottom, var(--redA), var(--redB));
+            border-radius: 0 0 12px 12px; box-shadow: 0 12px 26px rgba(0,0,0,0.5);
+            z-index: 10; pointer-events: none; border-top: 1px solid rgba(212,175,55,.22);
         }
 
+        /* Nắp Tam Giác (Fix lỗi hở góc) */
         .env-flap {
-            position: absolute; top: 40px; left: 0; width: 100%; height: 160px; 
-            background: #e53935; clip-path: polygon(0 0, 100% 0, 50% 100%);
-            transform-origin: top; border-top: 4px solid #d4af37;
-            z-index: 20; transition: transform 0.6s ease-in-out, z-index 0.1s;
-            backface-visibility: visible; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
-        }
-        .env-flap::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.3) 50%, transparent 65%);
-            pointer-events: none;
+            position: absolute; top: 40px; left: 0; width: 100%; height: 170px;
+            background: linear-gradient(180deg, #e53935, #a20f16);
+            border-top: 3px solid rgba(212,175,55,.85);
+            clip-path: polygon(-10% 0, 110% 0, 50% 100%);
+            transform-origin: top center; transform: rotateX(0deg);
+            z-index: 20; transition: transform .6s ease-in-out, z-index .1s;
+            backface-visibility: hidden; filter: drop-shadow(0 3px 7px rgba(0,0,0,.35));
         }
 
         .env-seal {
-            position: absolute; top: 200px; left: 50%; transform: translate(-50%, -50%);
-            width: 50px; height: 50px; background: radial-gradient(circle, #fce7a0, #d4af37);
-            border-radius: 50%; color: #8b0000; font-weight: bold; border: 2px solid #fff;
+            position: absolute; top: 210px; left: 50%; transform: translate(-50%, -50%);
+            width: 54px; height: 54px;
+            background: radial-gradient(circle at 30% 30%, var(--gold2), var(--gold));
+            border-radius: 50%; color: #7a0a10; font-weight: 900;
+            border: 2px solid rgba(255,255,255,.85);
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.3); transition: opacity 0.3s;
+            box-shadow: 0 10px 18px rgba(0,0,0,.35);
+            transition: opacity .3s, transform .3s;
             z-index: 21; pointer-events: none;
         }
 
-        /* Animation Lì Xì */
+        /* Animation */
         .lixi-container.open .env-flap { transform: rotateX(180deg); z-index: 2; }
-        .lixi-container.open .env-seal { opacity: 0; }
-
-        .lixi-container.drop .env-back,
-        .lixi-container.drop .env-front,
-        .lixi-container.drop .env-seal {
-            transform: translateY(150vh); transition: transform 1s ease-in, opacity 0.5s 0.8s; opacity: 0;
+        .lixi-container.open .env-seal { opacity: 0; transform: translate(-50%,-50%) scale(.92); }
+        .lixi-container.drop .env-back, .lixi-container.drop .env-front, .lixi-container.drop .env-seal {
+            transform: translateY(150vh); transition: transform 1s ease-in, opacity .5s .8s; opacity: 0;
         }
         .lixi-container.drop .env-flap {
-            transform: translateY(150vh) rotateX(180deg); transition: transform 1s ease-in, opacity 0.5s 0.8s; opacity: 0; z-index: 2;
+            transform: translateY(150vh) rotateX(180deg); transition: transform 1s ease-in, opacity .5s .8s; opacity: 0; z-index: 2;
         }
-        .lixi-container.drop .card { transform: scale(0.6) translateY(-250px); }
-
+        .lixi-container.drop .card { transform: scale(0.6) translateY(-250px); box-shadow: 0 26px 90px rgba(0,0,0,.55); }
         .lixi-container.final .card {
-            z-index: 100; transform: scale(1) translateY(-40px); box-shadow: 0 0 80px rgba(212, 175, 55, 0.6);
+            z-index: 100; transform: scale(1) translateY(-40px);
+            box-shadow: 0 0 80px rgba(212,175,55,0.55), 0 40px 140px rgba(0,0,0,.65);
         }
-        .lixi-container:not(.open):hover { animation: shake 0.5s infinite; }
-        @keyframes shake { 0%, 100% {transform: rotate(0deg);} 25% {transform: rotate(1deg);} 75% {transform: rotate(-1deg);} }
     </style>
 </head>
 <body>
@@ -323,7 +262,6 @@
     <audio id="nhacNen" loop hidden>
         <source src="nhac.mp3" type="audio/mpeg">
     </audio>
-
 
     <div class="music-control" id="musicBtn" title="Bật/Tắt Nhạc">
         <span class="music-icon" id="musicIcon">🔇</span>
@@ -373,22 +311,22 @@
 
         <div class="content-box scroll-reveal" style="text-align: center;">
             <h2 class="box-title">Lì Xì May Mắn</h2>
-            <p style="margin-bottom: 20px; color: #ddd;">Mời thầy cô bấm vào bao lì xì để nhận lời chúc!</p>
+            <p style="margin-bottom: 20px; color: #ddd;">Mời thầy cô và các bạn bấm vào bao lì xì để nhận lộc đầu năm!</p>
             
             <div class="lixi-container" id="lixiContainer">
                 <div class="env-back"></div>
                 <div class="card" id="card">
                     <span class="emoji">🌸</span>
                     <h2>Tết Ấm Áp 2026</h2>
-                    <p id="wish-content">...</p>
+                    <p id="wish-content">Nhấn để nhận lời chúc ✨</p>
+                    <div class="mini">AN KHANG • THỊNH VƯỢNG</div>
                 </div>
                 <div class="env-front"></div>
                 <div class="env-flap"></div>
                 <div class="env-seal">TẾT</div>
             </div>
         </div>
-
-    </div>
+        </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -442,14 +380,14 @@
         }, { threshold: 0.2 });
         document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
 
-        // --- 4. LOGIC NHẠC (GIỮ NGUYÊN) ---
+        // --- 4. LOGIC NHẠC ---
         document.addEventListener('DOMContentLoaded', function() {
             var audio = document.getElementById("nhacNen");
             var video = document.getElementById("traiVideo");
             var btn = document.getElementById("musicBtn");
             var icon = document.getElementById("musicIcon");
             
-            audio.volume = 0.09; 
+            audio.volume = 0.09; // Âm lượng 30%
 
             var isMusicPlaying = false;
 
@@ -468,9 +406,11 @@
             });
 
             // Tự tắt nhạc khi xem video
-            video.addEventListener('play', function() { if (!audio.paused) { audio.pause(); } });
-            video.addEventListener('pause', function() { if (isMusicPlaying) { audio.play(); } });
-            video.addEventListener('ended', function() { if (isMusicPlaying) { audio.play(); } });
+            if(video) {
+                video.addEventListener('play', function() { if (!audio.paused) { audio.pause(); } });
+                video.addEventListener('pause', function() { if (isMusicPlaying) { audio.play(); } });
+                video.addEventListener('ended', function() { if (isMusicPlaying) { audio.play(); } });
+            }
 
             // Auto-play
             function tryAutoPlay() {
@@ -498,33 +438,32 @@
             });
         });
 
-        // --- 5. LOGIC LÌ XÌ (MỚI THÊM VÀO CUỐI) ---
+        // --- 5. LOGIC LÌ XÌ (MỚI THÊM VÀO) ---
         const wishes = [
             "Tiền vào như nước, tiền ra nhỏ giọt! 💰",
             "Năm mới xinh đẹp, Crush tự đổ không cần cưa! 😍",
             "Học giỏi nhất khối, cân mọi bài thi! 💯",
             "Ăn nhiều không béo, tiền tiêu không hết! ✨",
-            "Vạn sự như ý, tỷ sự như mơ! ❤️",
-            "Sức khỏe dồi dào, gia đình hạnh phúc! 🌸"
+            "Vạn sự như ý, tỷ sự như mơ! ❤️"
         ];
-        const lixiContainer = document.getElementById('lixiContainer');
+        const container = document.getElementById('lixiContainer');
         const wishContent = document.getElementById('wish-content');
         let hasOpened = false;
 
-        lixiContainer.addEventListener('click', function() {
+        container.addEventListener('click', function () {
             if (hasOpened) return;
             hasOpened = true;
-            
+
             wishContent.innerText = wishes[Math.floor(Math.random() * wishes.length)];
-            
+
             // 1. Mở nắp
-            lixiContainer.classList.add('open');
-            
-            // 2. Rơi xuống (Sau 0.6s)
-            setTimeout(() => { lixiContainer.classList.add('drop'); }, 600);
-            
-            // 3. Phóng to (Sau 1.6s)
-            setTimeout(() => { lixiContainer.classList.add('final'); }, 1600);
+            container.classList.add('open');
+
+            // 2. Rơi xuống
+            setTimeout(() => { container.classList.add('drop'); }, 600);
+
+            // 3. Phóng to
+            setTimeout(() => { container.classList.add('final'); }, 1600);
         });
     </script>
 </body>
