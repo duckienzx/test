@@ -3,256 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hội trại chào xuân</title>
-    <meta property="og:image" content="https://i.imgur.com/YK1Ym9s.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:type" content="website">
+    <title>Hội trại Xuân 2026</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- THIẾT LẬP CHUNG --- */
+        /* =========================================
+           1. CẤU HÌNH GIAO DIỆN
+           ========================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            /* Nền Đỏ Rượu -> Đen */
             background: radial-gradient(circle at center, #5e0000 0%, #290000 40%, #000000 100%);
             background-attachment: fixed; 
-            font-family: 'Montserrat', sans-serif;
-            color: #fff;
-            overflow-x: hidden; 
+            font-family: 'Montserrat', sans-serif; color: #fff; overflow-x: hidden; 
         }
 
-        #canvas-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-            pointer-events: none;
-        }
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-        /* --- NÚT ĐIỀU KHIỂN NHẠC --- */
+        /* Nút Nhạc */
         .music-control {
             position: fixed; bottom: 30px; left: 20px; z-index: 100;
-            width: 50px; height: 50px;
-            background: rgba(255, 215, 0, 0.2);
+            width: 50px; height: 50px; background: rgba(255, 215, 0, 0.2);
             border: 2px solid #FDC830; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; backdrop-filter: blur(5px);
-            transition: all 0.3s; animation: pulse 2s infinite;
+            cursor: pointer; backdrop-filter: blur(5px); animation: pulse 2s infinite;
         }
-        
-        .music-control:hover { background: rgba(255, 215, 0, 0.5); transform: scale(1.1); }
         .music-icon { font-size: 24px; line-height: 1; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(253, 200, 48, 0); } }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(253, 200, 48, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0); }
-        }
-
-        /* --- PHẦN 1: MÀN HÌNH CHÀO --- */
-        .hero-section {
-            position: relative; height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;
-        }
-
+        /* Hero Section */
+        .hero-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10; }
         .year {
-            font-weight: 900; font-size: 24vw; 
-            line-height: 1.1; padding: 10px;    
+            font-weight: 900; font-size: 24vw; line-height: 1.1; padding: 10px;    
             letter-spacing: -2px; color: transparent;
             background: linear-gradient(180deg, #FFFFFF 20%, #FDC830 50%, #F37335 100%);
             -webkit-background-clip: text; background-clip: text;
             filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9)); margin-bottom: 10px;
         }
-
         .greeting {
             font-weight: 900; font-size: 6vw; text-transform: uppercase; letter-spacing: 2px;
             background: linear-gradient(to bottom, #ffffff 30%, #ffd700 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
-            min-height: 2em; text-align: center;
-            display: flex; align-items: center; justify-content: center;
-            width: 90%; padding: 0 10px; 
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3)); text-align: center; padding: 0 10px; 
         }
-
-        .scroll-indicator {
-            position: absolute; bottom: 30px; display: flex; flex-direction: column; align-items: center;
-            opacity: 0.7; animation: bounce 2s infinite;
-        }
-        
+        .scroll-indicator { position: absolute; bottom: 30px; animation: bounce 2s infinite; opacity: 0.7; }
         .arrow { font-size: 1.5rem; color: #FDC830; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* --- PHẦN 2: NỘI DUNG --- */
-        .content-section {
-            position: relative; min-height: 100vh; padding: 50px 20px; z-index: 10;
-            display: flex; flex-direction: column; align-items: center; gap: 40px; padding-bottom: 100px;
-        }
-
+        /* Content Section */
+        .content-section { min-height: 100vh; padding: 50px 20px; z-index: 10; position: relative; display: flex; flex-direction: column; align-items: center; gap: 40px; padding-bottom: 150px; }
         .content-box {
-            width: 100%; max-width: 800px;
-            background: rgba(30, 0, 0, 0.85); backdrop-filter: blur(20px); 
-            border: 2px solid rgba(255, 215, 0, 0.5); border-radius: 30px; 
-            padding: 40px 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); 
-            opacity: 0; transform: translateY(50px); transition: all 1s ease;
+            width: 100%; max-width: 800px; background: rgba(30, 0, 0, 0.85); 
+            backdrop-filter: blur(20px); border: 2px solid rgba(255, 215, 0, 0.5); 
+            border-radius: 30px; padding: 40px 30px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6); opacity: 0; transform: translateY(50px); transition: all 1s ease;
         }
-
         .content-box.visible { transform: translateY(0); opacity: 1; }
-
         .box-title {
             font-weight: 900; font-size: 2rem; color: #FDC830; margin-bottom: 30px;
             text-transform: uppercase; border-bottom: 3px solid rgba(255, 215, 0, 0.3);
             display: inline-block; padding-bottom: 10px; text-align: center; width: 100%;
         }
 
-        /* --- STYLE CHO VIDEO --- */
-        .video-container {
-            width: 100%; border-radius: 15px; overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: #000;
-        }
-
+        .video-container { width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255, 215, 0, 0.3); background: #000; }
         video { width: 100%; height: auto; display: block; }
 
-        /* Style danh sách */
-        .list-group { margin-bottom: 30px; padding: 0 10px; text-align: left;}
-        
-        .category-title {
-            color: #FDC830; font-size: 1.4rem; font-weight: 700;
-            text-transform: uppercase; margin-bottom: 15px;
-            border-left: 5px solid #FDC830; padding-left: 15px;
-            background: linear-gradient(90deg, rgba(253, 200, 48, 0.1), transparent);
-        }
-        
+        .list-group { margin-bottom: 30px; padding: 0 10px; text-align: left; }
+        .category-title { color: #FDC830; font-size: 1.4rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; border-left: 5px solid #FDC830; padding-left: 15px; background: linear-gradient(90deg, rgba(253, 200, 48, 0.1), transparent); }
         .item-list { list-style: none; padding-left: 10px; }
-        
-        .item-list li {
-            font-size: 1.2rem; color: #eee; margin-bottom: 15px;
-            display: flex; align-items: flex-start; line-height: 1.5;
-            padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
-        }
-        
+        .item-list li { font-size: 1.2rem; color: #eee; margin-bottom: 15px; display: flex; align-items: flex-start; padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
         .item-list li strong { color: #fff; min-width: 130px; display: inline-block; flex-shrink: 0; }
-        .item-list li span { color: #ddd; font-weight: 400; }
-        
-        .item-list li::before {
-            content: "✔"; color: #00ff00; font-size: 1.2rem; margin-right: 15px; margin-top: 2px; flex-shrink: 0;
-        }
+        .item-list li::before { content: "✔"; color: #00ff00; margin-right: 15px; margin-top: 2px; flex-shrink: 0; }
+        .signature { margin-top: 40px; text-align: center; font-style: italic; color: #bbb; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
         @media (max-width: 768px) {
-            .content-box { padding: 25px 15px; }
-            .box-title { font-size: 1.5rem; }
-            .year { font-size: 23vw; letter-spacing: -1px; }
-            .item-list li { flex-direction: column; align-items: flex-start; }
-            .item-list li strong { width: 100%; margin-bottom: 5px; color: #FDC830; }
+            .year { font-size: 23vw; }
+            .item-list li { flex-direction: column; }
             .item-list li::before { display: none; }
+            .item-list li strong { color: #FDC830; margin-bottom: 5px; }
             .item-list li strong::before { content: "✔ "; color: #00ff00; }
         }
 
-        .signature {
-            margin-top: 40px; text-align: center; font-style: italic;
-            color: #bbb; font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-        }
-
         /* =========================================
-           PHẦN MỚI: CSS CHO BAO LÌ XÌ
+           2. CSS BAO LÌ XÌ
            ========================================= */
-        :root {
-            --redA: #c9151f; --redB: #7f0a10; --gold: #d4af37; --gold2: #f6e7b1; --paper: #fffdf2;
-        }
         .lixi-container {
-            position: relative; width: 260px; height: 400px;
-            margin: 0 auto; perspective: 1000px; cursor: pointer;
-            -webkit-user-select: none; user-select: none;
+            position: relative; width: 260px; height: 380px; margin: 0 auto;
+            perspective: 1000px; cursor: pointer; user-select: none;
             filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
-            transition: transform .25s ease;
         }
         .lixi-container:not(.open):hover { transform: translateY(-2px) rotateX(2deg); }
 
-        .env-back {
-            position: absolute; bottom: 0; width: 100%; height: 360px;
-            background: linear-gradient(160deg, var(--redA), #6a070c);
-            border-radius: 12px; z-index: 1; overflow: hidden;
-        }
-        .env-back::before {
-            content: ""; position: absolute; inset: 10px; border-radius: 10px;
-            border: 1px solid rgba(212,175,55,.55); opacity: .95; pointer-events: none;
-        }
+        .env-back { position: absolute; bottom: 0; width: 100%; height: 360px; background: #b71c1c; border-radius: 12px; z-index: 1; }
 
         .card {
-            position: absolute; width: 320px; height: 420px; bottom: 0;
-            left: 50%; margin-left: -160px; 
-            transform: scale(0.6) translateY(80px); 
-            background: var(--paper); border: 2px solid rgba(212,175,55,.85); border-radius: 16px;
-            z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: absolute; width: 320px; height: 420px; bottom: 0; left: 50%;
+            transform: translateX(-50%) scale(0.6) translateY(80px);
+            background: #fffdf0; border: 3px solid #d4af37; border-radius: 16px; z-index: 5;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; padding: 30px; box-sizing: border-box;
-            transition: transform .8s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow .8s;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             will-change: transform; backface-visibility: hidden;
         }
-        .card::before {
-            content: ""; position: absolute; top: 16px; left: 20px; right: 20px; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212,175,55,.95), transparent); opacity: .9;
-        }
-        .emoji { font-size: 58px; display: block; margin-bottom: 10px; }
-        .card h2 {
-            font-family: 'Playfair Display', serif; color: #8b0b10; margin: 14px 0 12px;
-            font-size: 38px; letter-spacing: .3px;
-        }
-        .card p { font-size: 20px; color: #2a241f; line-height: 1.6; font-weight: 600; margin: 0; }
-        .mini { margin-top: 16px; font-family: sans-serif; letter-spacing: 2px; font-size: 12px; color: #7a5b11; opacity: .9; }
+        .card h2 { font-family: 'Playfair Display', serif; color: #b71c1c; margin: 20px 0; font-size: 32px; }
+        .card p { font-size: 18px; color: #333; line-height: 1.6; font-weight: 600; font-family: 'Montserrat', sans-serif;}
+        .emoji { font-size: 50px; display: block; margin-bottom: 15px; }
+
+        /* Ảnh ngựa */
+        .horse-deco { position: absolute; width: 60px; height: auto; z-index: 2; opacity: 0.8; }
+        .horse-left { top: 10px; left: 10px; }
+        .horse-right { top: 10px; right: 10px; transform: scaleX(-1); }
 
         .env-front {
-            position: absolute; bottom: 0; width: 100%; height: 85%;
-            background: radial-gradient(120% 70% at 50% 0%, rgba(0,0,0,.25), transparent 55%),
-                        linear-gradient(to bottom, var(--redA), var(--redB));
-            border-radius: 0 0 12px 12px; box-shadow: 0 12px 26px rgba(0,0,0,0.5);
-            z-index: 10; pointer-events: none; border-top: 1px solid rgba(212,175,55,.22);
+            position: absolute; bottom: 0; width: 100%; height: 306px;
+            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 6px), linear-gradient(to bottom, #d32f2f, #c62828);
+            border-radius: 0 0 12px 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 10; pointer-events: none; border-top: 1px solid rgba(212,175,55,.2);
         }
 
-        /* Nắp Tam Giác (Fix lỗi hở góc) */
         .env-flap {
-            position: absolute; top: 40px; left: 0; width: 100%; height: 170px;
+            position: absolute; top: 40px; left: 0; width: 100%; height: 160px;
             background: linear-gradient(180deg, #e53935, #a20f16);
-            border-top: 3px solid rgba(212,175,55,.85);
+            border-top: 4px solid #d4af37;
             clip-path: polygon(-10% 0, 110% 0, 50% 100%);
-            transform-origin: top center; transform: rotateX(0deg);
-            z-index: 20; transition: transform .6s ease-in-out, z-index .1s;
-            backface-visibility: hidden; filter: drop-shadow(0 3px 7px rgba(0,0,0,.35));
+            transform-origin: top; z-index: 20; 
+            transition: transform 0.6s ease-in-out, z-index 0.1s;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
         }
 
         .env-seal {
-            position: absolute; top: 210px; left: 50%; transform: translate(-50%, -50%);
-            width: 54px; height: 54px;
-            background: radial-gradient(circle at 30% 30%, var(--gold2), var(--gold));
-            border-radius: 50%; color: #7a0a10; font-weight: 900;
-            border: 2px solid rgba(255,255,255,.85);
+            position: absolute; top: 200px; left: 50%; transform: translate(-50%, -50%);
+            width: 50px; height: 50px; background: radial-gradient(circle, #fce7a0, #d4af37);
+            border-radius: 50%; color: #8b0000; font-weight: bold; border: 2px solid #fff;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 10px 18px rgba(0,0,0,.35);
-            transition: opacity .3s, transform .3s;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3); transition: opacity 0.3s;
             z-index: 21; pointer-events: none;
         }
 
-        /* Animation */
         .lixi-container.open .env-flap { transform: rotateX(180deg); z-index: 2; }
-        .lixi-container.open .env-seal { opacity: 0; transform: translate(-50%,-50%) scale(.92); }
-        .lixi-container.drop .env-back, .lixi-container.drop .env-front, .lixi-container.drop .env-seal {
-            transform: translateY(150vh); transition: transform 1s ease-in, opacity .5s .8s; opacity: 0;
+        .lixi-container.open .env-seal { opacity: 0; }
+        .lixi-container.drop .env-back, .lixi-container.drop .env-front, .lixi-container.drop .env-seal { transform: translateY(150vh); transition: transform 1s ease-in, opacity 0.5s 0.8s; opacity: 0; }
+        .lixi-container.drop .env-flap { transform: translateY(150vh) rotateX(180deg); transition: transform 1s ease-in, opacity 0.5s 0.8s; opacity: 0; z-index: 2; }
+        .lixi-container.drop .card { transform: translateX(-50%) scale(0.6) translateY(-250px); }
+        .lixi-container.final .card { z-index: 100; transform: translateX(-50%) scale(1) translateY(-60px); box-shadow: 0 0 80px rgba(212, 175, 55, 0.6); }
+
+        /* =========================================
+           3. CSS CHATBOT AI
+           ========================================= */
+        .ai-toggle-btn {
+            position: fixed; bottom: 90px; right: 20px; width: 50px; height: 50px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff); border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,114,255,0.4); display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 999; transition: transform 0.3s; animation: floatAI 3s ease-in-out infinite;
         }
-        .lixi-container.drop .env-flap {
-            transform: translateY(150vh) rotateX(180deg); transition: transform 1s ease-in, opacity .5s .8s; opacity: 0; z-index: 2;
+        .ai-toggle-btn:hover { transform: scale(1.1); }
+        .ai-icon { font-size: 28px; }
+        @keyframes floatAI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .chat-container {
+            position: fixed; bottom: 100px; right: 80px; width: 300px; height: 400px;
+            background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px);
+            border: 1px solid #00c6ff; border-radius: 15px; display: flex; flex-direction: column;
+            overflow: hidden; z-index: 999; transform: scale(0); transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -5px 10px 30px rgba(0,0,0,0.5);
         }
-        .lixi-container.drop .card { transform: scale(0.6) translateY(-250px); box-shadow: 0 26px 90px rgba(0,0,0,.55); }
-        .lixi-container.final .card {
-            z-index: 100; transform: scale(1) translateY(-40px);
-            box-shadow: 0 0 80px rgba(212,175,55,0.55), 0 40px 140px rgba(0,0,0,.65);
-        }
+        .chat-container.active { transform: scale(1); }
+        .chat-header { background: linear-gradient(90deg, #00c6ff, #0072ff); padding: 15px; color: white; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .close-chat { cursor: pointer; font-size: 20px; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .message { max-width: 80%; padding: 8px 12px; border-radius: 10px; font-size: 0.9rem; line-height: 1.4; }
+        .bot-msg { align-self: flex-start; background: #333; color: #eee; border-bottom-left-radius: 2px; }
+        .user-msg { align-self: flex-end; background: #0072ff; color: white; border-bottom-right-radius: 2px; }
+        .chat-footer { padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 5px; }
+        .chat-input { flex: 1; padding: 8px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: white; }
+        .send-btn { background: none; border: none; color: #00c6ff; cursor: pointer; font-size: 18px; }
+        .chat-body::-webkit-scrollbar { width: 5px; }
+        .chat-body::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -277,17 +207,15 @@
         
         <div class="content-box scroll-reveal">
             <h2 class="box-title">Danh Sách Vật Tư</h2>
-            
             <div class="list-group">
                 <h3 class="category-title">Vật Liệu & Dụng Cụ</h3>
                 <ul class="item-list">
                     <li><strong>Tre:</strong> <span>Dùng làm cọc chính, khung mái và cổng trại.</span></li>
-                    <li><strong>Ốc Vít:</strong> <span>Khoan bắt các mối nối chịu lực (nhanh, chắc).</span></li>
+                    <li><strong>Ốc Vít:</strong> <span>Khoan bắt các mối nối chịu lực.</span></li>
                     <li><strong>Dây Thép:</strong> <span>Gia cố các điểm nối, buộc kèo.</span></li>
                     <li><strong>Dụng Cụ:</strong> <span>Máy khoan, tua vít, kìm, búa, cưa.</span></li>
                 </ul>
             </div>
-            
             <div class="signature">
                 Kính trình thầy cô giáo chủ nhiệm phê duyệt. <br>
                 <strong>Tập thể Lớp [Tên Lớp]</strong>
@@ -296,14 +224,12 @@
 
         <div class="content-box scroll-reveal">
             <h2 class="box-title">Video quá trình làm trại</h2>
-            
             <div class="video-container">
                 <video id="traiVideo" controls playsinline>
                     <source src="video.mp4" type="video/mp4">
                     Trình duyệt của bạn không hỗ trợ thẻ video.
                 </video>
             </div>
-
             <p style="text-align: center; margin-top: 20px; color: #bbb; font-style: italic;">
                 (Nhạc nền sẽ tự tắt khi bạn xem video ❤️)
             </p>
@@ -311,22 +237,43 @@
 
         <div class="content-box scroll-reveal" style="text-align: center;">
             <h2 class="box-title">Lì Xì May Mắn</h2>
-            <p style="margin-bottom: 20px; color: #ddd;">Mời thầy cô và các bạn bấm vào bao lì xì để nhận lộc đầu năm!</p>
+            <p style="margin-bottom: 20px; color: #ddd;">Mời thầy cô bấm vào bao lì xì để nhận lộc đầu năm!</p>
             
             <div class="lixi-container" id="lixiContainer">
                 <div class="env-back"></div>
                 <div class="card" id="card">
-                    <span class="emoji">🌸</span>
-                    <h2>Tết Ấm Áp 2026</h2>
-                    <p id="wish-content">Nhấn để nhận lời chúc ✨</p>
-                    <div class="mini">AN KHANG • THỊNH VƯỢNG</div>
+                    <img src="nguar.png" class="horse-deco horse-left" alt="Ngựa trái">
+                    <img src="nguar.png" class="horse-deco horse-right" alt="Ngựa phải">
+
+                    <span class="emoji">🧧</span>
+                    <h2>Xuân Bính Ngọ</h2>
+                    <p id="wish-content">...</p>
                 </div>
                 <div class="env-front"></div>
                 <div class="env-flap"></div>
                 <div class="env-seal">TẾT</div>
             </div>
         </div>
+
+    </div>
+
+    <div class="ai-toggle-btn" id="aiBtn" onclick="toggleChat()">
+        <span class="ai-icon">🤖</span>
+    </div>
+
+    <div class="chat-container" id="chatBox">
+        <div class="chat-header">
+            <span>Thư ký lớp 11B2 💢</span>
+            <span class="close-chat" onclick="toggleChat()">×</span>
         </div>
+        <div class="chat-body" id="chatBody">
+            <div class="message bot-msg">Em chào Thầy/Cô và các bạn! Em là AI thông minh của lớp mình. Mọi người cần hỏi gì không ạ?</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Nhập tin nhắn..." onkeypress="handleEnter(event)">
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -349,20 +296,18 @@
             positions[i+1]=(Math.random()-0.5)*1500;
             positions[i+2]=(Math.random()-0.5)*1500;
             let rand=Math.random();
-            if(rand>0.5){colors[i]=1;colors[i+1]=0.84;colors[i+2]=0;}
-            else{colors[i]=1;colors[i+1]=1;colors[i+2]=1;}
+            if(rand>0.5){colors[i]=1;colors[i+1]=0.84;colors[i+2]=0;} else {colors[i]=1;colors[i+1]=1;colors[i+2]=1;}
         }
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         const stars = new THREE.Points(geometry, new THREE.PointsMaterial({size: 2.5, vertexColors: true, transparent: true, opacity: 0.9}));
-        scene.add(stars);
-        camera.position.z = 400;
+        scene.add(stars); camera.position.z = 400;
         function animate(){requestAnimationFrame(animate);stars.rotation.y+=0.0005;renderer.render(scene, camera);}
         animate();
         window.addEventListener('resize', ()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
 
-        // --- 2. TEXT ANIMATION (GIỮ NGUYÊN) ---
-        const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "새해 복 많이 받으세요", "あけましておめでとう"];
+        // --- 2. HIỆU ỨNG CHỮ & SCROLL (GIỮ NGUYÊN) ---
+        const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "Xuân Bính Ngọ 2026", "Vạn Sự Như Ý"];
         let index = 0; const textEl = document.getElementById('greeting-text');
         setInterval(() => {
             gsap.to(textEl, {opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
@@ -371,100 +316,189 @@
             }});
         }, 3000);
         gsap.from(".year", { duration: 2, y: -50, opacity: 0, ease: "power3.out" });
-
-        // --- 3. SCROLL REVEAL (GIỮ NGUYÊN) ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
         }, { threshold: 0.2 });
         document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
 
-        // --- 4. LOGIC NHẠC ---
+        // --- 3. LOGIC NHẠC & VIDEO (GIỮ NGUYÊN) ---
         document.addEventListener('DOMContentLoaded', function() {
             var audio = document.getElementById("nhacNen");
             var video = document.getElementById("traiVideo");
             var btn = document.getElementById("musicBtn");
             var icon = document.getElementById("musicIcon");
-            
-            audio.volume = 0.09; // Âm lượng 30%
-
-            var isMusicPlaying = false;
-
+            audio.volume = 0.09; var isMusicPlaying = false;
             btn.addEventListener('click', function() {
-                if (isMusicPlaying) {
-                    audio.pause();
-                    isMusicPlaying = false;
-                    icon.innerText = "🔇";
-                    btn.style.animation = "none";
-                } else {
-                    audio.play();
-                    isMusicPlaying = true;
-                    icon.innerText = "🔊";
-                    btn.style.animation = "pulse 2s infinite";
-                }
+                if (isMusicPlaying) { audio.pause(); isMusicPlaying = false; icon.innerText = "🔇"; btn.style.animation = "none"; }
+                else { audio.play().then(() => { isMusicPlaying = true; icon.innerText = "🔊"; btn.style.animation = "pulse 2s infinite"; }).catch(e=>{}); }
             });
-
-            // Tự tắt nhạc khi xem video
             if(video) {
                 video.addEventListener('play', function() { if (!audio.paused) { audio.pause(); } });
                 video.addEventListener('pause', function() { if (isMusicPlaying) { audio.play(); } });
                 video.addEventListener('ended', function() { if (isMusicPlaying) { audio.play(); } });
             }
-
-            // Auto-play
             function tryAutoPlay() {
                 if (!isMusicPlaying) {
-                    audio.play().then(() => {
-                        isMusicPlaying = true;
-                        icon.innerText = "🔊";
-                        btn.style.animation = "pulse 2s infinite";
-                        ['click', 'scroll', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay));
-                    }).catch(err => {});
+                    audio.play().then(() => { isMusicPlaying = true; icon.innerText = "🔊"; btn.style.animation = "pulse 2s infinite"; ['click', 'scroll', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay)); }).catch(err => {});
                 }
             }
             ['click', 'scroll', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
-
             document.addEventListener("visibilitychange", function() {
-                if (document.hidden) {
-                    // Khi thoát ra -> Tạm dừng nhạc (nhưng không đổi biến trạng thái)
-                    audio.pause(); 
-                } else {
-                    // Khi vào lại -> Kiểm tra xem lúc nãy nhạc có đang bật không
-                    if (isMusicPlaying) { 
-                        audio.play(); 
-                    }
-                }
+                if (document.hidden) { audio.pause(); } else { if (isMusicPlaying) { audio.play(); } }
             });
         });
 
-        // --- 5. LOGIC LÌ XÌ (MỚI THÊM VÀO) ---
-        const wishes = [
-            "Tiền vào như nước, tiền ra nhỏ giọt! 💰",
-            "Năm mới xinh đẹp, Crush tự đổ không cần cưa! 😍",
-            "Học giỏi nhất khối, cân mọi bài thi! 💯",
-            "Ăn nhiều không béo, tiền tiêu không hết! ✨",
-            "Vạn sự như ý, tỷ sự như mơ! ❤️"
+        // --- 4. LOGIC LÌ XÌ (GIỮ NGUYÊN) ---
+       const wishes = [
+            // --- NHÓM 1: CHÚC SỨC KHỎE & BÌNH AN (DÀI & TÌNH CẢM) ---
+            "Nhân dịp năm mới Bính Ngọ 2026, em xin kính chúc Thầy/Cô luôn dồi dào sức khỏe, thân tâm an lạc. Mong rằng mỗi ngày đến trường của Thầy/Cô đều là một ngày vui và tràn ngập hạnh phúc.",
+            "Sang năm mới, kính chúc Thầy/Cô có một bầu trời sức khỏe, một biển cả tình thương, một đại dương tình cảm và một gia đình thịnh vượng, vạn sự như ý.",
+            "Kính chúc Thầy/Cô và gia đình một năm mới An Khang Thịnh Vượng. Mong Thầy/Cô luôn giữ được nụ cười trên môi và sức khỏe dẻo dai để tiếp tục sự nghiệp trồng người vĩ đại.",
+            "Xuân đã về trên khắp mọi nẻo đường. Em kính chúc Thầy/Cô năm mới nhiều sức khỏe, luôn vui vẻ, bình an và hạnh phúc bên những người thân yêu.",
+            "Năm mới đến, em cầu chúc cho Thầy/Cô luôn được mạnh khỏe, bình an. Cảm ơn Thầy/Cô đã luôn là ngọn hải đăng soi sáng dẫn lối cho chúng em trên con đường tri thức.",
+            "Chúc Thầy/Cô năm mới: Đau đầu vì nhà giàu, mệt mỏi vì học giỏi, buồn phiền vì nhiều tiền, ngang trái vì xinh gái, và mất ngủ vì không có đối thủ!",
+            "Kính chúc Thầy/Cô năm mới: Sức khỏe vô biên, bệnh tật tiêu tan, vạn sự bình an, tỷ sự như mơ, làm việc như thơ, đời vui như nhạc.",
+            "Đầu xuân năm mới, kính chúc Thầy/Cô luôn tươi trẻ như hoa mùa xuân, khỏe mạnh như cây tùng bách và vững chãi như núi thái sơn để che chở cho đàn em nhỏ.",
+            "Mong rằng năm 2026 sẽ mang đến cho Thầy/Cô thật nhiều niềm vui bất ngờ, sức khỏe dẻo dai và những khoảnh khắc đáng nhớ bên gia đình và học trò.",
+            "Chúc Thầy/Cô năm mới tâm hồn luôn thanh thản, cuộc sống luôn bình yên, công việc luôn thuận lợi và gia đình luôn êm ấm.",
+
+            // --- NHÓM 2: CHÚC SỰ NGHIỆP TRỒNG NGƯỜI (TRANG TRỌNG) ---
+            "Kính chúc Thầy/Cô một năm mới gặt hái được nhiều thành công rực rỡ. Mong Thầy/Cô luôn giữ vững ngọn lửa đam mê để tiếp tục dìu dắt chúng em đến bến bờ tri thức.",
+            "Năm mới Bính Ngọ, chúc Thầy/Cô luôn vững tay chèo, đưa thêm nhiều chuyến đò tri thức cập bến vinh quang. Chúng em mãi biết ơn công lao dạy dỗ của Thầy/Cô.",
+            "Chúc Thầy/Cô năm mới có thêm nhiều sáng kiến hay, nhiều bài giảng tuyệt vời để truyền cảm hứng cho bao thế hệ học trò. Chúc mừng năm mới!",
+            "Kính chúc Thầy/Cô năm nay lớp chủ nhiệm luôn chăm ngoan, học giỏi, đạt nhiều thành tích cao, để Thầy/Cô luôn tự hào và mỉm cười mỗi ngày.",
+            "Năm mới đến, chúc sự nghiệp giáo dục của Thầy/Cô ngày càng thăng hoa. Chúc Thầy/Cô đào tạo được thật nhiều nhân tài cho đất nước.",
+            "Chúc Thầy/Cô năm mới công tác tốt, được đồng nghiệp quý mến, phụ huynh tin tưởng và học sinh kính trọng. Vạn sự như ý, tỷ sự như mơ.",
+            "Mong Thầy/Cô luôn chân cứng đá mềm, vượt qua mọi khó khăn vất vả của nghề giáo để tiếp tục ươm mầm những hạt giống tốt cho đời.",
+            "Kính chúc Thầy/Cô năm mới bận rộn với những niềm vui, lo toan với những thành công và hạnh phúc với những lứa học trò trưởng thành.",
+            "Chúc Thầy/Cô năm mới: Soạn bài nhanh như chớp, chấm bài thoáng như mây, học sinh ngoan như cừu và thành tích cao như núi.",
+            "Năm 2026, chúc Thầy/Cô luôn là người truyền lửa vĩ đại nhất, thắp sáng ước mơ và hoài bão cho chúng em vững bước vào đời.",
+
+            // --- NHÓM 3: TRI ÂN & XÚC ĐỘNG (SÂU SẮC) ---
+            "Không có nghề gì cao quý bằng nghề dạy học. Nhân dịp đầu xuân, chúng em xin gửi lời tri ân sâu sắc nhất đến Thầy/Cô. Chúc Thầy/Cô năm mới vạn sự an nhiên.",
+            "Cảm ơn Thầy/Cô đã luôn kiên nhẫn, bao dung và tận tụy với những đứa học trò 'nhất quỷ nhì ma'. Chúc Thầy/Cô năm mới thật nhiều niềm vui và hạnh phúc.",
+            "Dù đi bốn phương trời, chúng em vẫn mãi nhớ về mái trường xưa, về những bài giảng và tình yêu thương của Thầy/Cô. Chúc mừng năm mới!",
+            "Mỗi nét bút, mỗi trang văn đều thấm đẫm công ơn của Thầy/Cô. Chúng em xin hứa sẽ cố gắng học tập thật tốt để không phụ lòng mong mỏi ấy.",
+            "Thầy Cô chính là người cha, người mẹ thứ hai của chúng em. Kính chúc Thầy/Cô năm mới sức khỏe dồi dào, gia đình hạnh phúc, con cháu thảo hiền.",
+            "Mai đây khôn lớn, dù bay cao bay xa đến đâu, chúng em vẫn luôn nhớ về nơi này, nơi có Thầy/Cô đang ngày đêm miệt mài bên trang giáo án.",
+            "Thời gian có thể làm bạc thêm mái tóc Thầy, nhưng không thể làm phai mờ tình yêu thương mà Thầy dành cho chúng em. Chúc Thầy năm mới mạnh khỏe!",
+            "Cảm ơn Thầy/Cô đã gieo mầm tri thức, chắp cánh ước mơ cho chúng em. Chúc Thầy/Cô một năm mới tràn đầy năng lượng và nhiệt huyết.",
+            "Kính chúc Thầy/Cô năm mới: Gạt bỏ mọi muộn phiền, chỉ giữ lại niềm vui. Cảm ơn Thầy/Cô đã luôn là chỗ dựa tinh thần vững chắc cho chúng em.",
+            "Một chữ cũng là Thầy, nửa chữ cũng là Thầy. Nhân dịp Tết đến xuân về, em kính chúc Thầy/Cô luôn mạnh khỏe, bình an và hạnh phúc.",
+
+            // --- NHÓM 4: CHÚC TÀI LỘC & MAY MẮN (PHẤN KHỞI) ---
+            "Tân niên tân phúc tân phú quý - Tấn tài tấn lộc tấn bình an. Chúc Thầy/Cô năm mới tiền vào như nước, tiền ra nhỏ giọt như cà phê phin!",
+            "Năm mới Bính Ngọ, chúc Thầy/Cô mã đáo thành công, đánh đâu thắng đó, tài lộc đầy nhà, gia đạo ấm êm, hạnh phúc viên mãn.",
+            "Chúc Thầy/Cô năm 2026: Đa lộc, đa tài, đa phú quý. Đắc thời, đắc lợi, đắc nhân tâm. Vạn sự hanh thông, toàn gia đại cát.",
+            "Kính chúc Thầy/Cô năm mới: Túi lúc nào cũng rủng rỉnh tiền, tim lúc nào cũng đong đầy tình, và nhà lúc nào cũng ngập tràn tiếng cười.",
+            "Chúc Thầy/Cô khai xuân đắc lộc, cả năm phát tài. Mong rằng năm nay Thầy/Cô sẽ gặp được thật nhiều may mắn và cơ hội mới.",
+            "Năm mới, chúc Thầy/Cô nhận được thật nhiều phong bao lì xì (tình cảm) từ học sinh, và thật nhiều phong bao tài lộc từ cuộc sống!",
+            "Chúc Thầy/Cô năm nay 'bội thu' những điểm 10 rực rỡ, và 'mất mùa' hoàn toàn những điểm kém. Chúc lớp mình luôn đứng nhất khối!",
+            "Chúc Thầy/Cô: Công danh thăng tiến, tiền bạc rủng rỉnh, tình duyên phơi phới, hạnh phúc ngập tràn, vạn sự bình an.",
+            "Xuân này hơn hẳn mấy xuân qua. Phúc lộc đưa nhau đến từng nhà. Vài lời cung chúc tân niên mới. Vạn sự an khang vạn sự lành.",
+            "Chúc Thầy/Cô năm mới: Hay ăn chóng béo, tiền nhiều như kẹo, tình chặt như keo, dẻo dai như mèo, mịn màng trắng trẻo!",
+
+            // --- NHÓM 5: THƠ CHÚC TẾT (VĂN HAY CHỮ TỐT) ---
+            "Mùa xuân xin chúc - Khúc ca an bình - Năm mới phát tài - Vạn sự như ý - Già trẻ lớn bé - Đầy ắp tiếng cười - Trên mặt ngời ngời - Tràn đầy hạnh phúc.",
+            "Cung chúc tân niên - Sức khỏe vô biên - Thành công liên miên - Hạnh phúc triền miên - Túi luôn đầy tiền - Sung sướng như tiên.",
+            "Năm mới tết đến - Rước hên vào nhà - Quà cáp bao la - Mọi nhà no đủ - Vàng bạc đầy hũ - Gia chủ phát tài - Già trẻ gái trai - Sum vầy hạnh phúc.",
+            "Kính chúc Thầy Cô - Năm mới bình an - Sức khỏe dồi dào - Công danh sáng lạn - May mắn ngập tràn - Gia đình thịnh vượng.",
+            "Xuân về tết đến - Chúc Thầy chúc Cô - Sức khỏe dồi dào - Như dòng sông chảy - Sự nghiệp trồng người - Ngày càng tỏa sáng.",
+            "Bính Ngọ vừa sang - Hạnh phúc mênh mang - Ý chí vững vàng - Niềm vui rộn ràng - Tiền bạc lai láng - Sức khỏe cường tráng.",
+            "Chúc Thầy Cô giáo - Năm mới an khang - Dạy tốt học hay - Trò ngoan chắp cánh - Tương lai rạng ngời - Nước non sánh bước.",
+            "Đầu xuân năm mới - Chúc Cô trẻ mãi - Chúc Thầy đẹp trai - Lớp mình hăng hái - Học tập thật tài - Tương lai rộng mở.",
+            "Hoa đào nở rộ - Báo hiệu xuân sang - Chúc Thầy Cô giáo - Một năm an nhàn - Gặt hái vinh quang - Trọn niềm vui sướng.",
+            "Tết đến xuân về - Cầu cho Thầy Cô - Sức khỏe tràn trề - Công danh thỏa chí - Vạn sự như ý - Tỷ sự như mơ."
         ];
-        const container = document.getElementById('lixiContainer');
+        const lixiContainer = document.getElementById('lixiContainer');
         const wishContent = document.getElementById('wish-content');
         let hasOpened = false;
-
-        container.addEventListener('click', function () {
+        lixiContainer.addEventListener('click', function() {
             if (hasOpened) return;
             hasOpened = true;
-
             wishContent.innerText = wishes[Math.floor(Math.random() * wishes.length)];
-
-            // 1. Mở nắp
-            container.classList.add('open');
-
-            // 2. Rơi xuống
-            setTimeout(() => { container.classList.add('drop'); }, 600);
-
-            // 3. Phóng to
-            setTimeout(() => { container.classList.add('final'); }, 1600);
+            lixiContainer.classList.add('open');
+            setTimeout(() => { lixiContainer.classList.add('drop'); }, 600);
+            setTimeout(() => { lixiContainer.classList.add('final'); }, 1600);
         });
+    </script>
+
+    <!-- 5. LOGIC TRỢ LÝ ẢO (ĐÃ SỬA LỖI TREO VÀ SAI TIN NHẮN) -->
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+        const chatBox = document.getElementById('chatBox');
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+        const API_KEY = "AIzaSyCIC7N-rbAU579H0E1FdyrEkM3ymg7fKBM"; 
+
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+
+        // Gắn hàm vào window để HTML onclick gọi được
+        window.toggleChat = () => {
+            chatBox.classList.toggle('active');
+            if (chatBox.classList.contains('active')) chatInput.focus();
+        };
+
+        window.handleEnter = (e) => {
+            if (e.key === 'Enter') window.sendMessage();
+        };
+
+        window.sendMessage = async () => {
+            let text = chatInput.value.trim();
+            if (text === "") return;
+
+            // 1. Hiện tin nhắn của Người dùng (Màu Xanh - Phải)
+            addMessage(text, 'user-msg');
+            chatInput.value = "";
+            
+            // 2. Hiện tin nhắn Bot "Đang suy nghĩ" (Màu Xám - Trái)
+            const loadingId = "bot-" + Date.now();
+            addMessage("Đang suy nghĩ... ⏳", 'bot-msg', loadingId);
+
+            try {
+                // --- PHẦN SỬA ĐỔI: THÊM THÔNG TIN NGƯỜI LÀM WEB ---
+                const creator = "Kiên"; // <-- THAY TÊN BẠN VÀO ĐÂY
+                const lop = "Lớp 11B2";         // <-- THAY TÊN LỚP VÀO ĐÂY
+
+                const prompt = `Bạn là trợ lý ảo vui tính của Hội trại Xuân 2026.
+                                Thông tin quan trọng:
+                                - Trang web này do ${creator} từ ${lop} thiết kế và lập trình.
+                                - Nếu ai hỏi "ai làm ra web", "ai tạo ra bạn", hãy trả lời thật tự hào về ${creator}.
+                                - Chủ đề trại: Xuân Bính Ngọ 2026.
+                                Phong cách: Thân thiện, lễ phép, dùng nhiều icon Tết. 
+                                Câu hỏi của người dùng: ${text}`;
+                // -----------------------------------------------
+
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                let aiReply = response.text();
+
+                // 3. Cập nhật đúng cái bong bóng Bot vừa tạo
+                const botBubble = document.getElementById(loadingId);
+                if (botBubble) {
+                    // Xóa các dấu ** Markdown để text đẹp hơn
+                    botBubble.innerText = aiReply.replace(/\*\*/g, "");
+                }
+            } catch (error) {
+                console.error("Lỗi AI:", error);
+                const botBubble = document.getElementById(loadingId);
+                if (botBubble) botBubble.innerText = "Hệ thống đang bận một chút, thử lại nhé! 🧧";
+            } finally {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        };
+
+        function addMessage(text, className, id = null) {
+            let div = document.createElement('div');
+            div.className = `message ${className}`;
+            div.innerText = text;
+            if (id) div.id = id;
+            chatBody.appendChild(div);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            return id;
+        }
     </script>
 </body>
 </html>
