@@ -242,10 +242,10 @@
             <div class="lixi-container" id="lixiContainer">
                 <div class="env-back"></div>
                 <div class="card" id="card">
-                    <img src="nguar.png" class="horse-deco horse-left" alt="Ngựa trái">
-                    <img src="nguar.png" class="horse-deco horse-right" alt="Ngựa phải">
+                    <img src="ngua.png" class="horse-deco horse-left" alt="Ngựa trái">
+                    <img src="ngua.png" class="horse-deco horse-right" alt="Ngựa phải">
 
-                    <span class="emoji">🧧</span>
+                    <span class="emoji">🌸</span>
                     <h2>Xuân Bính Ngọ</h2>
                     <p id="wish-content">...</p>
                 </div>
@@ -263,11 +263,11 @@
 
     <div class="chat-container" id="chatBox">
         <div class="chat-header">
-            <span>Thư ký lớp 11B2 💢</span>
+            <span>Trợ Lý Trại 2026</span>
             <span class="close-chat" onclick="toggleChat()">×</span>
         </div>
         <div class="chat-body" id="chatBody">
-            <div class="message bot-msg">Em chào Thầy/Cô và các bạn! Em là AI thông minh của lớp mình. Mọi người cần hỏi gì không ạ?</div>
+            <div class="message bot-msg">Em chào Thầy/Cô và các bạn! Em là AI thông minh của lớp mình. Mọi người cần hỏi gì không ạ? (Ví dụ: chúc tết, làm thơ, hỏi vật tư...)</div>
         </div>
         <div class="chat-footer">
             <input type="text" id="chatInput" class="chat-input" placeholder="Nhập tin nhắn..." onkeypress="handleEnter(event)">
@@ -349,66 +349,14 @@
         });
 
         // --- 4. LOGIC LÌ XÌ (GIỮ NGUYÊN) ---
-       const wishes = [
-            // --- NHÓM 1: CHÚC SỨC KHỎE & BÌNH AN (DÀI & TÌNH CẢM) ---
-            "Nhân dịp năm mới Bính Ngọ 2026, em xin kính chúc Thầy/Cô luôn dồi dào sức khỏe, thân tâm an lạc. Mong rằng mỗi ngày đến trường của Thầy/Cô đều là một ngày vui và tràn ngập hạnh phúc.",
-            "Sang năm mới, kính chúc Thầy/Cô có một bầu trời sức khỏe, một biển cả tình thương, một đại dương tình cảm và một gia đình thịnh vượng, vạn sự như ý.",
-            "Kính chúc Thầy/Cô và gia đình một năm mới An Khang Thịnh Vượng. Mong Thầy/Cô luôn giữ được nụ cười trên môi và sức khỏe dẻo dai để tiếp tục sự nghiệp trồng người vĩ đại.",
-            "Xuân đã về trên khắp mọi nẻo đường. Em kính chúc Thầy/Cô năm mới nhiều sức khỏe, luôn vui vẻ, bình an và hạnh phúc bên những người thân yêu.",
-            "Năm mới đến, em cầu chúc cho Thầy/Cô luôn được mạnh khỏe, bình an. Cảm ơn Thầy/Cô đã luôn là ngọn hải đăng soi sáng dẫn lối cho chúng em trên con đường tri thức.",
-            "Chúc Thầy/Cô năm mới: Đau đầu vì nhà giàu, mệt mỏi vì học giỏi, buồn phiền vì nhiều tiền, ngang trái vì xinh gái, và mất ngủ vì không có đối thủ!",
-            "Kính chúc Thầy/Cô năm mới: Sức khỏe vô biên, bệnh tật tiêu tan, vạn sự bình an, tỷ sự như mơ, làm việc như thơ, đời vui như nhạc.",
-            "Đầu xuân năm mới, kính chúc Thầy/Cô luôn tươi trẻ như hoa mùa xuân, khỏe mạnh như cây tùng bách và vững chãi như núi thái sơn để che chở cho đàn em nhỏ.",
-            "Mong rằng năm 2026 sẽ mang đến cho Thầy/Cô thật nhiều niềm vui bất ngờ, sức khỏe dẻo dai và những khoảnh khắc đáng nhớ bên gia đình và học trò.",
-            "Chúc Thầy/Cô năm mới tâm hồn luôn thanh thản, cuộc sống luôn bình yên, công việc luôn thuận lợi và gia đình luôn êm ấm.",
-
-            // --- NHÓM 2: CHÚC SỰ NGHIỆP TRỒNG NGƯỜI (TRANG TRỌNG) ---
-            "Kính chúc Thầy/Cô một năm mới gặt hái được nhiều thành công rực rỡ. Mong Thầy/Cô luôn giữ vững ngọn lửa đam mê để tiếp tục dìu dắt chúng em đến bến bờ tri thức.",
-            "Năm mới Bính Ngọ, chúc Thầy/Cô luôn vững tay chèo, đưa thêm nhiều chuyến đò tri thức cập bến vinh quang. Chúng em mãi biết ơn công lao dạy dỗ của Thầy/Cô.",
-            "Chúc Thầy/Cô năm mới có thêm nhiều sáng kiến hay, nhiều bài giảng tuyệt vời để truyền cảm hứng cho bao thế hệ học trò. Chúc mừng năm mới!",
-            "Kính chúc Thầy/Cô năm nay lớp chủ nhiệm luôn chăm ngoan, học giỏi, đạt nhiều thành tích cao, để Thầy/Cô luôn tự hào và mỉm cười mỗi ngày.",
-            "Năm mới đến, chúc sự nghiệp giáo dục của Thầy/Cô ngày càng thăng hoa. Chúc Thầy/Cô đào tạo được thật nhiều nhân tài cho đất nước.",
-            "Chúc Thầy/Cô năm mới công tác tốt, được đồng nghiệp quý mến, phụ huynh tin tưởng và học sinh kính trọng. Vạn sự như ý, tỷ sự như mơ.",
-            "Mong Thầy/Cô luôn chân cứng đá mềm, vượt qua mọi khó khăn vất vả của nghề giáo để tiếp tục ươm mầm những hạt giống tốt cho đời.",
-            "Kính chúc Thầy/Cô năm mới bận rộn với những niềm vui, lo toan với những thành công và hạnh phúc với những lứa học trò trưởng thành.",
-            "Chúc Thầy/Cô năm mới: Soạn bài nhanh như chớp, chấm bài thoáng như mây, học sinh ngoan như cừu và thành tích cao như núi.",
-            "Năm 2026, chúc Thầy/Cô luôn là người truyền lửa vĩ đại nhất, thắp sáng ước mơ và hoài bão cho chúng em vững bước vào đời.",
-
-            // --- NHÓM 3: TRI ÂN & XÚC ĐỘNG (SÂU SẮC) ---
-            "Không có nghề gì cao quý bằng nghề dạy học. Nhân dịp đầu xuân, chúng em xin gửi lời tri ân sâu sắc nhất đến Thầy/Cô. Chúc Thầy/Cô năm mới vạn sự an nhiên.",
-            "Cảm ơn Thầy/Cô đã luôn kiên nhẫn, bao dung và tận tụy với những đứa học trò 'nhất quỷ nhì ma'. Chúc Thầy/Cô năm mới thật nhiều niềm vui và hạnh phúc.",
-            "Dù đi bốn phương trời, chúng em vẫn mãi nhớ về mái trường xưa, về những bài giảng và tình yêu thương của Thầy/Cô. Chúc mừng năm mới!",
-            "Mỗi nét bút, mỗi trang văn đều thấm đẫm công ơn của Thầy/Cô. Chúng em xin hứa sẽ cố gắng học tập thật tốt để không phụ lòng mong mỏi ấy.",
-            "Thầy Cô chính là người cha, người mẹ thứ hai của chúng em. Kính chúc Thầy/Cô năm mới sức khỏe dồi dào, gia đình hạnh phúc, con cháu thảo hiền.",
-            "Mai đây khôn lớn, dù bay cao bay xa đến đâu, chúng em vẫn luôn nhớ về nơi này, nơi có Thầy/Cô đang ngày đêm miệt mài bên trang giáo án.",
-            "Thời gian có thể làm bạc thêm mái tóc Thầy, nhưng không thể làm phai mờ tình yêu thương mà Thầy dành cho chúng em. Chúc Thầy năm mới mạnh khỏe!",
-            "Cảm ơn Thầy/Cô đã gieo mầm tri thức, chắp cánh ước mơ cho chúng em. Chúc Thầy/Cô một năm mới tràn đầy năng lượng và nhiệt huyết.",
-            "Kính chúc Thầy/Cô năm mới: Gạt bỏ mọi muộn phiền, chỉ giữ lại niềm vui. Cảm ơn Thầy/Cô đã luôn là chỗ dựa tinh thần vững chắc cho chúng em.",
-            "Một chữ cũng là Thầy, nửa chữ cũng là Thầy. Nhân dịp Tết đến xuân về, em kính chúc Thầy/Cô luôn mạnh khỏe, bình an và hạnh phúc.",
-
-            // --- NHÓM 4: CHÚC TÀI LỘC & MAY MẮN (PHẤN KHỞI) ---
-            "Tân niên tân phúc tân phú quý - Tấn tài tấn lộc tấn bình an. Chúc Thầy/Cô năm mới tiền vào như nước, tiền ra nhỏ giọt như cà phê phin!",
-            "Năm mới Bính Ngọ, chúc Thầy/Cô mã đáo thành công, đánh đâu thắng đó, tài lộc đầy nhà, gia đạo ấm êm, hạnh phúc viên mãn.",
-            "Chúc Thầy/Cô năm 2026: Đa lộc, đa tài, đa phú quý. Đắc thời, đắc lợi, đắc nhân tâm. Vạn sự hanh thông, toàn gia đại cát.",
-            "Kính chúc Thầy/Cô năm mới: Túi lúc nào cũng rủng rỉnh tiền, tim lúc nào cũng đong đầy tình, và nhà lúc nào cũng ngập tràn tiếng cười.",
-            "Chúc Thầy/Cô khai xuân đắc lộc, cả năm phát tài. Mong rằng năm nay Thầy/Cô sẽ gặp được thật nhiều may mắn và cơ hội mới.",
-            "Năm mới, chúc Thầy/Cô nhận được thật nhiều phong bao lì xì (tình cảm) từ học sinh, và thật nhiều phong bao tài lộc từ cuộc sống!",
-            "Chúc Thầy/Cô năm nay 'bội thu' những điểm 10 rực rỡ, và 'mất mùa' hoàn toàn những điểm kém. Chúc lớp mình luôn đứng nhất khối!",
-            "Chúc Thầy/Cô: Công danh thăng tiến, tiền bạc rủng rỉnh, tình duyên phơi phới, hạnh phúc ngập tràn, vạn sự bình an.",
-            "Xuân này hơn hẳn mấy xuân qua. Phúc lộc đưa nhau đến từng nhà. Vài lời cung chúc tân niên mới. Vạn sự an khang vạn sự lành.",
-            "Chúc Thầy/Cô năm mới: Hay ăn chóng béo, tiền nhiều như kẹo, tình chặt như keo, dẻo dai như mèo, mịn màng trắng trẻo!",
-
-            // --- NHÓM 5: THƠ CHÚC TẾT (VĂN HAY CHỮ TỐT) ---
-            "Mùa xuân xin chúc - Khúc ca an bình - Năm mới phát tài - Vạn sự như ý - Già trẻ lớn bé - Đầy ắp tiếng cười - Trên mặt ngời ngời - Tràn đầy hạnh phúc.",
-            "Cung chúc tân niên - Sức khỏe vô biên - Thành công liên miên - Hạnh phúc triền miên - Túi luôn đầy tiền - Sung sướng như tiên.",
-            "Năm mới tết đến - Rước hên vào nhà - Quà cáp bao la - Mọi nhà no đủ - Vàng bạc đầy hũ - Gia chủ phát tài - Già trẻ gái trai - Sum vầy hạnh phúc.",
-            "Kính chúc Thầy Cô - Năm mới bình an - Sức khỏe dồi dào - Công danh sáng lạn - May mắn ngập tràn - Gia đình thịnh vượng.",
-            "Xuân về tết đến - Chúc Thầy chúc Cô - Sức khỏe dồi dào - Như dòng sông chảy - Sự nghiệp trồng người - Ngày càng tỏa sáng.",
-            "Bính Ngọ vừa sang - Hạnh phúc mênh mang - Ý chí vững vàng - Niềm vui rộn ràng - Tiền bạc lai láng - Sức khỏe cường tráng.",
-            "Chúc Thầy Cô giáo - Năm mới an khang - Dạy tốt học hay - Trò ngoan chắp cánh - Tương lai rạng ngời - Nước non sánh bước.",
-            "Đầu xuân năm mới - Chúc Cô trẻ mãi - Chúc Thầy đẹp trai - Lớp mình hăng hái - Học tập thật tài - Tương lai rộng mở.",
-            "Hoa đào nở rộ - Báo hiệu xuân sang - Chúc Thầy Cô giáo - Một năm an nhàn - Gặt hái vinh quang - Trọn niềm vui sướng.",
-            "Tết đến xuân về - Cầu cho Thầy Cô - Sức khỏe tràn trề - Công danh thỏa chí - Vạn sự như ý - Tỷ sự như mơ."
+        const wishes = [
+            "Kính chúc Thầy/Cô năm mới 2026 An Khang Thịnh Vượng! 🌸",
+            "Chúc Thầy/Cô sức khỏe dồi dào, hạnh phúc bên gia đình! ❤️",
+            "Chúc Thầy/Cô một năm mới vạn sự bình an, bệnh tật tiêu tan! 💪",
+            "Mong Thầy/Cô luôn giữ nụ cười trên môi và nhiệt huyết với nghề! 🌿",
+            "Chúc Thầy/Cô đào tạo được thật nhiều thế hệ học trò xuất sắc! 🎓",
+            "Chúc Thầy/Cô năm mới tiền vào như nước, tiền ra nhỏ giọt! 💰",
+            "Chúc mừng năm mới Thầy Cô! Đa lộc, đa tài, đa phú quý! 🧧"
         ];
         const lixiContainer = document.getElementById('lixiContainer');
         const wishContent = document.getElementById('wish-content');
@@ -425,80 +373,99 @@
 
     <!-- 5. LOGIC TRỢ LÝ ẢO (ĐÃ SỬA LỖI TREO VÀ SAI TIN NHẮN) -->
     <script type="module">
-        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+    // Nhúng thư viện AI của Google
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-        const chatBox = document.getElementById('chatBox');
-        const chatBody = document.getElementById('chatBody');
-        const chatInput = document.getElementById('chatInput');
-        const API_KEY = "AIzaSyCIC7N-rbAU579H0E1FdyrEkM3ymg7fKBM"; 
+    const chatBox = document.getElementById('chatBox');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
 
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+    // 1. DANH SÁCH 8 KEY CỦA BẠN (Dán trực tiếp ở đây cho an toàn)
+    const API_KEYS = [
+        "AIzaSyByPiOYXtDmdVpFSeCwObEewGSuGXyPJnc",
+        "AIzaSyCVzzrp5W2oyFTUa1MppwechR_Ob0esKyQ",
+        "AIzaSyAfzfTfDIEQc4HS0zUV5zf6rjpgNUDC59g",
+        "AIzaSyAhNNVcQ5b94uJdAfq09Nay7IgEAWCqnZs",
+        "AIzaSyCQlns87-KKLOk0-Q48p4z99OdYb-3OZAk",
+        "AIzaSyD3RZm_hJoK7hFDx6-10VDk1fF3M51oGjs",
+        "AIzaSyCaZkQxhmgptLOPDDMnvnrw8Y8sWCm7POE",
+        "AIzaSyByPiOYXtDmdVpFSeCwObEewGSuGXyPJnc"
+    ];
 
-        // Gắn hàm vào window để HTML onclick gọi được
-        window.toggleChat = () => {
-            chatBox.classList.toggle('active');
-            if (chatBox.classList.contains('active')) chatInput.focus();
-        };
+    let currentKeyIndex = 0;
 
-        window.handleEnter = (e) => {
-            if (e.key === 'Enter') window.sendMessage();
-        };
+    // Hàm mở/đóng chat
+    window.toggleChat = () => {
+        chatBox.classList.toggle('active');
+        if (chatBox.classList.contains('active')) chatInput.focus();
+    };
 
-        window.sendMessage = async () => {
-            let text = chatInput.value.trim();
-            if (text === "") return;
+    // Hàm gửi tin nhắn
+    window.sendMessage = async () => {
+        let text = chatInput.value.trim();
+        if (text === "") return;
 
-            // 1. Hiện tin nhắn của Người dùng (Màu Xanh - Phải)
-            addMessage(text, 'user-msg');
-            chatInput.value = "";
-            
-            // 2. Hiện tin nhắn Bot "Đang suy nghĩ" (Màu Xám - Trái)
-            const loadingId = "bot-" + Date.now();
-            addMessage("Đang suy nghĩ... ⏳", 'bot-msg', loadingId);
+        // Hiện tin nhắn của bạn
+        addMessage(text, 'user-msg');
+        chatInput.value = "";
+        
+        // Hiện trạng thái chờ
+        const loadingId = "bot-" + Date.now();
+        addMessage("Đang lục tìm chất xám... 🧠", 'bot-msg', loadingId);
 
+        let success = false;
+
+        // VÒNG LẶP THỬ 8 KEY (Nếu key 1 lỗi tự đổi sang key 2)
+        for (let i = 0; i < API_KEYS.length; i++) {
             try {
-                // --- PHẦN SỬA ĐỔI: THÊM THÔNG TIN NGƯỜI LÀM WEB ---
-                const creator = "Kiên"; // <-- THAY TÊN BẠN VÀO ĐÂY
-                const lop = "Lớp 11B2";         // <-- THAY TÊN LỚP VÀO ĐÂY
+                const currentKey = API_KEYS[currentKeyIndex];
+                const genAI = new GoogleGenerativeAI(currentKey);
+                
+                // Dùng bản Flash cho nhanh và miễn phí
+                const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-                const prompt = `Bạn là trợ lý ảo vui tính của Hội trại Xuân 2026.
-                                Thông tin quan trọng:
-                                - Trang web này do ${creator} từ ${lop} thiết kế và lập trình.
-                                - Nếu ai hỏi "ai làm ra web", "ai tạo ra bạn", hãy trả lời thật tự hào về ${creator}.
-                                - Chủ đề trại: Xuân Bính Ngọ 2026.
-                                Phong cách: Thân thiện, lễ phép, dùng nhiều icon Tết. 
-                                Câu hỏi của người dùng: ${text}`;
-                // -----------------------------------------------
+                const prompt = `Bạn là trợ lý ảo lầy lội Hội trại Xuân 2026.  
+                Quy tắc: Trả lời cực NGẮN (dưới 2 câu), vui tính, dùng nhiều icon Tết .
+                Câu hỏi: ${text}`;
 
                 const result = await model.generateContent(prompt);
                 const response = await result.response;
-                let aiReply = response.text();
+                const aiReply = response.text();
 
-                // 3. Cập nhật đúng cái bong bóng Bot vừa tạo
+                // Hiển thị kết quả
                 const botBubble = document.getElementById(loadingId);
                 if (botBubble) {
-                    // Xóa các dấu ** Markdown để text đẹp hơn
                     botBubble.innerText = aiReply.replace(/\*\*/g, "");
                 }
-            } catch (error) {
-                console.error("Lỗi AI:", error);
-                const botBubble = document.getElementById(loadingId);
-                if (botBubble) botBubble.innerText = "Hệ thống đang bận một chút, thử lại nhé! 🧧";
-            } finally {
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }
-        };
+                success = true;
+                break; // Thành công thì dừng lại
 
-        function addMessage(text, className, id = null) {
-            let div = document.createElement('div');
-            div.className = `message ${className}`;
-            div.innerText = text;
-            if (id) div.id = id;
-            chatBody.appendChild(div);
-            chatBody.scrollTop = chatBody.scrollHeight;
-            return id;
+            } catch (error) {
+                console.warn(`Key ${currentKeyIndex + 1} bận, đang đổi sang đường truyền dự phòng...`);
+                // Đổi sang Key tiếp theo trong danh sách
+                currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+            }
         }
-    </script>
+
+        if (!success) {
+            document.getElementById(loadingId).innerText = "Hết lượt rồi đại vương ơi! Mai hỏi tiếp nhé! 🧧";
+        }
+    };
+
+    function addMessage(text, className, id = null) {
+        let div = document.createElement('div');
+        div.className = `message ${className}`;
+        div.innerText = text;
+        if (id) div.id = id;
+        chatBody.appendChild(div);
+        chatBody.scrollTop = chatBody.scrollHeight;
+        return id;
+    }
+
+    // Nhấn Enter để gửi
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === 'Enter') window.sendMessage();
+    });
+</script>
 </body>
 </html>
