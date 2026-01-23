@@ -498,7 +498,7 @@
         for (let i = 0; i < API_KEYS.length; i++) {
             try {
                 const genAI = new GoogleGenerativeAI(API_KEYS[currentKeyIndex]);
-                const model = genAI.getGenerativeModel({ model: "gemini-pro-latest" });
+                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
                 const prompt = `Bạn là trợ lý ảo Hội trại Xuân 2026. Chủ nhân là Pháp sư Kiên lớp 12A1. Trả lời cực ngắn dưới 2 câu, vui tính, dùng nhiều icon Tết 🧧🌸. Câu hỏi: ${text}`;
 
