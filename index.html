@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;900&family=Pacifico&family=Pinyon+Script&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
@@ -37,16 +37,17 @@
         /* Hero Section */
         .hero-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10; }
         
-        /* CSS CHO TÊN LỚP (MỚI THÊM) */
+        /* CSS CHO TÊN LỚP */
         .class-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem; 
-            color: #FDC830; 
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: -20px; /* Kéo sát xuống số 2026 */
+            font-family: 'Pinyon Script', cursive;
+            font-size: 5rem; 
+            color: #FDC830;    
+            -webkit-text-stroke: 1.5px #FDC830; 
+            text-transform: none;
+            margin-bottom: -10px; 
             text-shadow: 0 0 20px rgba(253, 200, 48, 0.6);
             z-index: 10;
+            text-align: center;
         }
 
         .year {
@@ -80,6 +81,96 @@
             text-transform: uppercase; border-bottom: 3px solid rgba(255, 215, 0, 0.3);
             display: inline-block; padding-bottom: 10px; text-align: center; width: 100%;
         }
+        
+        /* --- CSS MỚI: GIAN HÀNG SANG TRỌNG (ROYAL GOLD) --- */
+        
+        /* 1. Phần Ảnh Menu */
+        .menu-grid { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
+        .img-wrapper {
+            width: 48%; /* Chia đôi màn hình */
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .menu-thumb {
+            width: 100%; border-radius: 10px; cursor: pointer; transition: transform 0.3s;
+            border: 2px solid #FDC830; object-fit: cover; aspect-ratio: 3/4;
+        }
+        .menu-thumb:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .img-caption {
+            margin-top: 15px; /* Đẩy chữ xuống xa ảnh hơn một chút */
+            color: #FDC830; font-weight: bold; font-size: 0.9rem;
+            text-align: center; text-transform: uppercase; letter-spacing: 0.5px;
+            text-shadow: 0 2px 2px rgba(0,0,0,0.8);
+        }
+
+        /* 2. Phần Accordion (Menu xổ xuống) */
+        .accordion-container { width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        
+        .accordion-item {
+            background: rgba(20, 0, 0, 0.6); /* Nền tối sang trọng */
+            border: 1px solid rgba(253, 200, 48, 0.3);
+            border-radius: 12px; overflow: hidden;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .accordion-item:hover { border-color: #FDC830; box-shadow: 0 0 15px rgba(253, 200, 48, 0.15); }
+        
+        /* Nút bấm (Style mới: Chữ vàng, nền trong suốt) */
+        .accordion-btn {
+            width: 100%; padding: 18px 20px;
+            background: transparent; color: #FDC830;
+            font-family: 'Playfair Display', serif; /* Font có chân */
+            font-size: 1.2rem; font-weight: 700;
+            text-transform: uppercase; text-align: left;
+            border: none; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            letter-spacing: 1px;
+        }
+        .accordion-btn:hover { background: rgba(253, 200, 48, 0.05); }
+        .accordion-btn .icon { font-size: 1.5rem; transition: transform 0.3s; color: #fff; font-weight: 300; }
+        .accordion-btn.active .icon { transform: rotate(45deg); color: #FDC830; }
+        
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list li {
+            padding: 15px 20px; border-bottom: 1px dashed rgba(255,255,255,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .menu-list li:last-child { border-bottom: none; }
+        
+        .dish-name { font-size: 1rem; color: #eee; font-weight: 500; }
+        .price-badge {
+            background: rgba(255, 255, 255, 0.1); color: #fff;
+            padding: 4px 10px; border-radius: 6px;
+            font-weight: bold; font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            min-width: 50px; text-align: center;
+        }
+        .price-badge.gold {
+            background: #FDC830; color: #8b0000; border: none;
+            box-shadow: 0 0 10px rgba(253, 200, 48, 0.4);
+        }
+
+        /* Lightbox (Phóng to ảnh) */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 10000;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .lightbox.active { display: flex; animation: fadeIn 0.3s; }
+        .lightbox-img {
+            max-width: 95%; max-height: 80vh;
+            border-radius: 10px; border: 2px solid #FDC830;
+            box-shadow: 0 0 20px rgba(253, 200, 48, 0.5);
+        }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 30px;
+            font-size: 40px; color: #fff; cursor: pointer; z-index: 10001;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* -------------------------------------------------- */
 
         .video-container { width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255, 215, 0, 0.3); background: #000; }
         video { width: 100%; height: auto; display: block; }
@@ -101,68 +192,22 @@
             .item-list li strong::before { content: "✔ "; color: #00ff00; }
         }
 
-        /* 2. CSS BAO LÌ XÌ (ĐỎ TƯƠI + VIỀN VÀNG) */
-        .lixi-container {
-            position: relative; width: 260px; height: 380px; margin: 0 auto;
-            perspective: 1000px; cursor: pointer; user-select: none;
-            filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
-        }
+        /* 2. CSS BAO LÌ XÌ */
+        .lixi-container { position: relative; width: 260px; height: 380px; margin: 0 auto; perspective: 1000px; cursor: pointer; user-select: none; filter: drop-shadow(0 18px 40px rgba(0,0,0,.55)); }
         .lixi-container:not(.open):hover { transform: translateY(-2px) rotateX(2deg); }
-
         .env-back { position: absolute; bottom: 0; width: 100%; height: 360px; background: #e60000; border-radius: 12px; z-index: 1; }
-
-        .card {
-            position: absolute; width: 320px; height: 420px; bottom: 0; left: 50%;
-            transform: translateX(-50%) scale(0.6) translateY(80px);
-            background: #fffdf0; border: 3px solid #d4af37; border-radius: 16px; z-index: 5;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 30px; box-sizing: border-box;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            will-change: transform; backface-visibility: hidden;
-        }
+        .card { position: absolute; width: 320px; height: 420px; bottom: 0; left: 50%; transform: translateX(-50%) scale(0.6) translateY(80px); background: #fffdf0; border: 3px solid #d4af37; border-radius: 16px; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; box-sizing: border-box; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); will-change: transform; backface-visibility: hidden; }
         .card h2 { font-family: 'Playfair Display', serif; color: #b71c1c; margin: 20px 0; font-size: 32px; }
         .card p { font-size: 18px; color: #333; line-height: 1.6; font-weight: 600; font-family: 'Montserrat', sans-serif;}
         .emoji { font-size: 50px; display: block; margin-bottom: 15px; }
-
         .horse-deco { position: absolute; width: 60px; height: auto; z-index: 2; opacity: 0.8; }
         .horse-left { top: 10px; left: 10px; }
         .horse-right { top: 10px; right: 10px; transform: scaleX(-1); }
-
-        .env-front {
-            position: absolute; bottom: 0; width: 100%; height: 306px;
-            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 6px), linear-gradient(to bottom, #ff4d4d, #cc0000);
-            border-radius: 0 0 12px 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            z-index: 10; pointer-events: none; border-top: 1px solid rgba(212,175,55,.2);
-        }
-
-        /* Nắp bao 2 lớp (Viền vàng) */
-        .env-flap {
-            position: absolute; top: 40px; left: 0; width: 100%; height: 160px;
-            border-top: 4px solid #d4af37; 
-            transform-origin: top; z-index: 20; 
-            transition: transform 0.6s ease-in-out, z-index 0.1s;
-            background: transparent; 
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
-        }
-        .env-flap::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #FDC830; clip-path: polygon(-10% 0, 110% 0, 50% 102%); z-index: 0;
-        }
-        .env-flap::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, #FF4D4D, #D90000);
-            clip-path: polygon(-10% 0, 110% 0, 50% 100%); z-index: 1;
-        }
-
-        .env-seal {
-            position: absolute; top: 200px; left: 50%; transform: translate(-50%, -50%);
-            width: 50px; height: 50px; background: radial-gradient(circle, #fce7a0, #d4af37);
-            border-radius: 50%; color: #8b0000; font-weight: bold; border: 2px solid #fff;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.3); transition: opacity 0.3s;
-            z-index: 21; pointer-events: none;
-        }
-
+        .env-front { position: absolute; bottom: 0; width: 100%; height: 306px; background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 6px), linear-gradient(to bottom, #ff4d4d, #cc0000); border-radius: 0 0 12px 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 10; pointer-events: none; border-top: 1px solid rgba(212,175,55,.2); }
+        .env-flap { position: absolute; top: 40px; left: 0; width: 100%; height: 160px; background: transparent; border-top: 4px solid #d4af37; transform-origin: top; z-index: 20; transition: transform 0.6s ease-in-out, z-index 0.1s; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
+        .env-flap::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #FDC830; clip-path: polygon(-10% 0, 110% 0, 50% 102%); z-index: 0; }
+        .env-flap::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #FF4D4D, #D90000); clip-path: polygon(-10% 0, 110% 0, 50% 100%); z-index: 1; }
+        .env-seal { position: absolute; top: 200px; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: radial-gradient(circle, #fce7a0, #d4af37); border-radius: 50%; color: #8b0000; font-weight: bold; border: 2px solid #fff; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 10px rgba(0,0,0,0.3); transition: opacity 0.3s; z-index: 21; pointer-events: none; }
         .lixi-container.open .env-flap { transform: rotateX(180deg); z-index: 2; }
         .lixi-container.open .env-seal { opacity: 0; }
         .lixi-container.drop .env-back, .lixi-container.drop .env-front, .lixi-container.drop .env-seal { transform: translateY(150vh); transition: transform 1s ease-in, opacity 0.5s 0.8s; opacity: 0; }
@@ -173,36 +218,10 @@
         /* =========================================
            3. CSS CHATBOT AI
            ========================================= */
-        .ai-toggle-btn {
-            position: fixed; bottom: 90px; right: 20px; width: 50px; height: 50px;
-            background: linear-gradient(135deg, #00c6ff, #0072ff); border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0,114,255,0.4); display: flex; justify-content: center; align-items: center;
-            cursor: pointer; z-index: 999; transition: transform 0.3s; animation: floatAI 3s ease-in-out infinite;
-        }
-        .ai-toggle-btn:hover { transform: scale(1.1); }
-        .ai-icon { font-size: 28px; }
-        @keyframes floatAI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        .chat-container {
-            position: fixed; bottom: 100px; right: 80px; width: 300px; height: 400px;
-            background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px);
-            border: 1px solid #00c6ff; border-radius: 15px; display: flex; flex-direction: column;
-            overflow: hidden; z-index: 999; transform: scale(0); transform-origin: bottom right;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: -5px 10px 30px rgba(0,0,0,0.5);
-        }
-        .chat-container.active { transform: scale(1); }
-        .chat-header { background: linear-gradient(90deg, #00c6ff, #0072ff); padding: 15px; color: white; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-        .close-chat { cursor: pointer; font-size: 20px; }
-        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .message { max-width: 80%; padding: 8px 12px; border-radius: 10px; font-size: 0.9rem; line-height: 1.4; }
-        .bot-msg { align-self: flex-start; background: #333; color: #eee; border-bottom-left-radius: 2px; }
-        .user-msg { align-self: flex-end; background: #0072ff; color: white; border-bottom-right-radius: 2px; }
-        .chat-footer { padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 5px; }
-        .chat-input { flex: 1; padding: 8px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: white; }
-        .send-btn { background: none; border: none; color: #00c6ff; cursor: pointer; font-size: 18px; }
-        .chat-body::-webkit-scrollbar { width: 5px; }
-        .chat-body::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
+        .ai-toggle-btn { position: fixed; bottom: 90px; right: 20px; width: 50px; height: 50px; background: linear-gradient(135deg, #00c6ff, #0072ff); border-radius: 50%; box-shadow: 0 5px 15px rgba(0,114,255,0.4); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 999; transition: transform 0.3s; animation: floatAI 3s ease-in-out infinite; }
+        .ai-toggle-btn:hover { transform: scale(1.1); } .ai-icon { font-size: 28px; } @keyframes floatAI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .chat-container { position: fixed; bottom: 100px; right: 80px; width: 300px; height: 400px; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); border: 1px solid #00c6ff; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; z-index: 999; transform: scale(0); transform-origin: bottom right; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: -5px 10px 30px rgba(0,0,0,0.5); }
+        .chat-container.active { transform: scale(1); } .chat-header { background: linear-gradient(90deg, #00c6ff, #0072ff); padding: 15px; color: white; font-weight: bold; display: flex; justify-content: space-between; align-items: center; } .close-chat { cursor: pointer; font-size: 20px; } .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; } .message { max-width: 80%; padding: 8px 12px; border-radius: 10px; font-size: 0.9rem; line-height: 1.4; } .bot-msg { align-self: flex-start; background: #333; color: #eee; border-bottom-left-radius: 2px; } .user-msg { align-self: flex-end; background: #0072ff; color: white; border-bottom-right-radius: 2px; } .chat-footer { padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 5px; } .chat-input { flex: 1; padding: 8px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: white; } .send-btn { background: none; border: none; color: #00c6ff; cursor: pointer; font-size: 18px; } .chat-body::-webkit-scrollbar { width: 5px; } .chat-body::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -242,7 +261,7 @@
             <h2 class="box-title">2. Đồ Trang Trí</h2>
             <div class="list-group">
                 <ul class="item-list">
-                    <li><strong>Mâm Ngũ Quả:</strong> </span>Gồm có: Dứa,Dưa Hấu, Bưởi, Quýt.</span></li>
+                    <li><strong>Mâm Ngũ Quả:</strong> <span>Gồm có: Dứa,Dưa Hấu, Bưởi, Quýt.</span></li>
                     <li><strong>Câu Đối:</strong> <span>Trang trí hai bên mặt cổng trại .</span></li>
                     <li><strong>Hoa Mai/Đào:</strong> <span>Đặt tại hai bên cổng.</span></li>
                     <li><strong>Cờ Tổ Quốc:</strong> <span>Cắm bên phải cổng trại .</span></li>
@@ -267,6 +286,96 @@
             </div>
         </div>
 
+        <div class="content-box scroll-reveal" style="margin-top: 60px;">
+            <h2 class="box-title" style="border-bottom: none; text-shadow: 0 0 10px #FDC830;">✨ Gian Hàng 11B2 ✨</h2>
+            
+            <div class="menu-grid">
+                
+                <div class="img-wrapper">
+                    <img src="menu.png" class="menu-thumb" onclick="openLightbox(this.src)" alt="Menu 1">
+                    <p class="img-caption">📜 Menu </p>
+                </div>
+
+                <div class="img-wrapper">
+                    <img src="qr.png" class="menu-thumb" onclick="openLightbox(this.src)" alt="Menu 2">
+                    <p class="img-caption">📸 QR BANK</p>
+                </div>
+
+            </div>
+            
+            <p style="text-align: center; color: #FDC830; font-size: 0.8rem; margin-top: -10px; margin-bottom: 30px; opacity: 0.8; font-style: italic;">
+                (Ấn vào ảnh để phóng to)
+            </p>
+
+            <div class="accordion-container">
+                
+                <div class="accordion-item">
+                    <button class="accordion-btn" onclick="toggleAccordion(this)">
+                        <span class="btn-text">🥢 Thực Đơn Món Lẻ</span>
+                        <span class="icon">＋</span>
+                    </button>
+                    <div class="accordion-content">
+                        <ul class="menu-list">
+                            <li><span class="dish-name">Xúc xích Đức</span> <span class="price-badge">10K</span></li>
+                            <li><span class="dish-name">Bánh tráng trộn</span> <span class="price-badge">15K</span></li>
+                            <li><span class="dish-name">Chân gà sả tắc</span> <span class="price-badge">20K</span></li>
+                            <li><span class="dish-name">Trà đào / Trà tắc</span> <span class="price-badge">15K</span></li>
+                            <li><span class="dish-name">Nem chua rán</span> <span class="price-badge">10K</span></li>
+                            <li><span class="dish-name">Há cảo</span> <span class="price-badge">10K</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item" style="border: 1px solid rgba(253, 200, 48, 0.6); background: linear-gradient(135deg, rgba(50, 0, 0, 0.8), rgba(20, 0, 0, 0.8));">
+                    <button class="accordion-btn" onclick="toggleAccordion(this)">
+                        <span class="btn-text">👑 Combo Siêu Hời</span>
+                        <span class="icon">＋</span>
+                    </button>
+                    <div class="accordion-content">
+                        <ul class="menu-list">
+                            <li>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span class="dish-name">Combo FA (1 người)</span>
+                                    <span style="font-size: 0.8rem; color: #bbb;">(1 Ăn + 1 Uống bất kỳ)</span>
+                                </div>
+                                <span class="price-badge gold">25K</span>
+                            </li>
+                            <li>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span class="dish-name">Combo Bestie (2 người)</span>
+                                    <span style="font-size: 0.8rem; color: #bbb;">(2 Ăn + 2 Uống + Quà)</span>
+                                </div>
+                                <span class="price-badge gold">45K</span>
+                            </li>
+                             <li>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span class="dish-name">Mẹt Full Topping</span>
+                                    <span style="font-size: 0.8rem; color: #bbb;">(Cho 4 người ăn phủ phê)</span>
+                                </div>
+                                <span class="price-badge gold">90K</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 35px; position: relative;">
+                <div style="width: 50px; height: 2px; background: #FDC830; margin: 0 auto 15px; opacity: 0.5;"></div>
+                <p style="color: #fff; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic;">
+                    "Ăn là mê - Chê không tính tiền!" <br>
+                </p>
+                <p style="color: #FDC830; font-size: 0.9rem; margin-top: 5px; font-weight: bold;">
+                    ❤️ Kính mời ủng hộ Lớp 11B2 ❤️
+                </p>
+            </div>
+        </div>
+
+        <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+            <span class="lightbox-close">&times;</span>
+            <img id="lightbox-img" class="lightbox-img" src="">
+        </div>
+        
         <div class="content-box scroll-reveal">
             <h2 class="box-title">Video quá trình làm trại</h2>
             <div class="video-container">
@@ -302,9 +411,6 @@
 
     </div>
 
-    <div class="ai-toggle-btn" id="aiBtn" onclick="toggleChat()">
-        <span class="ai-icon">🤖</span>
-    </div>
 
     <div class="chat-container" id="chatBox">
         <div class="chat-header">
@@ -324,7 +430,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
     <script>
-        // --- SETUP SAO 3D ---
+        // --- 1. SETUP SAO 3D ---
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x1a0000, 0.002); 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -351,7 +457,7 @@
         animate();
         window.addEventListener('resize', ()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
 
-        // --- HIỆU ỨNG CHỮ ---
+        // --- 2. HIỆU ỨNG CHỮ ---
         const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "Xuân Bính Ngọ 2026", "Vạn Sự Như Ý"];
         let index = 0; const textEl = document.getElementById('greeting-text');
         setInterval(() => {
@@ -366,7 +472,7 @@
         }, { threshold: 0.2 });
         document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
 
-        // --- LOGIC NHẠC ---
+        // --- 3. LOGIC NHẠC ---
         document.addEventListener('DOMContentLoaded', function() {
             var audio = document.getElementById("nhacNen");
             var video = document.getElementById("traiVideo");
@@ -393,8 +499,28 @@
             });
         });
 
-        // --- LÌ XÌ ---
-       const wishes = [
+        // --- 4. LOGIC MỞ RỘNG DANH SÁCH (ACCORDION) ---
+        function toggleAccordion(btn) {
+            btn.classList.toggle('active');
+            var content = btn.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // --- 5. LOGIC LIGHTBOX (PHÓNG TO ẢNH) ---
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // --- 6. LÌ XÌ ---
+        const wishes = [
             "Nhân dịp năm mới Bính Ngọ 2026, em xin kính chúc Thầy/Cô luôn dồi dào sức khỏe, thân tâm an lạc. Mong rằng mỗi ngày đến trường của Thầy/Cô đều là một ngày vui và tràn ngập hạnh phúc.",
             "Sang năm mới, kính chúc Thầy/Cô có một bầu trời sức khỏe, một biển cả tình thương, một đại dương tình cảm và một gia đình thịnh vượng, vạn sự như ý.",
             "Kính chúc Thầy/Cô và gia đình một năm mới An Khang Thịnh Vượng. Mong Thầy/Cô luôn giữ được nụ cười trên môi và sức khỏe dẻo dai để tiếp tục sự nghiệp trồng người vĩ đại.",
@@ -458,82 +584,5 @@
             setTimeout(() => { lixiContainer.classList.add('final'); }, 1600);
         });
     </script>
-
-    <script type="module">
-    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-
-    const chatBox = document.getElementById('chatBox');
-    const chatBody = document.getElementById('chatBody');
-    const chatInput = document.getElementById('chatInput');
-
-    // DANH SÁCH 8 KEY CỦA KIÊN (Dán trực tiếp vào đây)
-    const API_KEYS = [
-        "AIzaSyByPiOYXtDmdVpFSeCwObEewGSuGXyPJnc",
-        "AIzaSyCVzzrp5W2oyFTUa1MppwechR_Ob0esKyQ",
-        "AIzaSyAfzfTfDIEQc4HS0zUV5zf6rjpgNUDC59g",
-        "AIzaSyAhNNVcQ5b94uJdAfq09Nay7IgEAWCqnZs",
-        "AIzaSyCQlns87-KKLOk0-Q48p4z99OdYb-3OZAk",
-        "AIzaSyD3RZm_hJoK7hFDx6-10VDk1fF3M51oGjs",
-        "AIzaSyCaZkQxhmgptLOPDDMnvnrw8Y8sWCm7POE",
-        "AIzaSyByPiOYXtDmdVpFSeCwObEewGSuGXyPJnc"
-    ];
-    let currentKeyIndex = 0;
-
-    window.toggleChat = () => {
-        chatBox.classList.toggle('active');
-        if (chatBox.classList.contains('active')) chatInput.focus();
-    };
-
-    window.sendMessage = async () => {
-        let text = chatInput.value.trim();
-        if (!text) return;
-
-        addMessage(text, 'user-msg');
-        chatInput.value = "";
-        const loadingId = "bot-" + Date.now();
-        addMessage("Đang lục tìm chất xám... 🧠", 'bot-msg', loadingId);
-
-        let success = false;
-        // XOAY VÒNG 8 KEY TRÊN TRÌNH DUYỆT (KHÔNG QUA CLOUD)
-        for (let i = 0; i < API_KEYS.length; i++) {
-            try {
-                const genAI = new GoogleGenerativeAI(API_KEYS[currentKeyIndex]);
-                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-                const prompt = `Bạn là trợ lý ảo Hội trại Xuân 2026. Chủ nhân là Pháp sư Kiên lớp 12A1. Trả lời cực ngắn dưới 2 câu, vui tính, dùng nhiều icon Tết 🧧🌸. Câu hỏi: ${text}`;
-
-                const result = await model.generateContent(prompt);
-                const response = await result.response;
-                
-                const botBubble = document.getElementById(loadingId);
-                if (botBubble) {
-                    botBubble.innerText = response.text().replace(/\*\*/g, "");
-                }
-                success = true;
-                break; 
-            } catch (error) {
-                console.warn("Đổi key dự phòng...");
-                currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
-            }
-        }
-
-        if (!success) {
-            document.getElementById(loadingId).innerText = "Hết lượt rồi đại vương ơi! 🧧";
-        }
-        chatBody.scrollTop = chatBody.scrollHeight;
-    };
-
-    function addMessage(text, className, id = null) {
-        let div = document.createElement('div');
-        div.className = `message ${className}`;
-        div.innerText = text;
-        if (id) div.id = id;
-        chatBody.appendChild(div);
-        chatBody.scrollTop = chatBody.scrollHeight;
-        return id;
-    }
-
-    chatInput.addEventListener("keypress", (e) => { if (e.key === 'Enter') sendMessage(); });
-</script>
 </body>
 </html>
