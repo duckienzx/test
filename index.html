@@ -430,7 +430,74 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
     <script>
-        // --- 1. SETUP SAO 3D ---
+        // ============================================================
+        // 1. CẤU HÌNH NHẠC & TỰ ĐỘNG TẮT KHI RỜI TAB (FIX LỖI)
+        // ============================================================
+        const audio = document.getElementById("nhacNen");
+        const video = document.getElementById("traiVideo");
+        const btn = document.getElementById("musicBtn");
+        const icon = document.getElementById("musicIcon");
+        
+        // Biến theo dõi trạng thái: Người dùng có ĐANG MUỐN nghe nhạc không?
+        let userWantsMusic = false; 
+
+        // Hàm bật/tắt nhạc khi bấm nút
+        btn.addEventListener('click', function() {
+            if (!audio.paused) {
+                audio.pause();
+                userWantsMusic = false;
+                icon.innerText = "🔇";
+                btn.style.animation = "none";
+            } else {
+                audio.play().then(() => {
+                    userWantsMusic = true;
+                    icon.innerText = "🔊";
+                    btn.style.animation = "pulse 2s infinite";
+                }).catch(e => console.log("Chặn phát nhạc: ", e));
+            }
+        });
+
+        // 🔥 TÍNH NĂNG QUAN TRỌNG: TỰ ĐỘNG TẮT KHI RỜI TAB 🔥
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                // Khi người dùng ẩn tab / tắt màn hình -> BẮT BUỘC DỪNG
+                audio.pause();
+            } else {
+                // Khi quay lại -> Chỉ phát nếu trước đó người dùng ĐANG NGHE
+                if (userWantsMusic) {
+                    audio.play().catch(e => {});
+                }
+            }
+        });
+
+        // Tự động tắt nhạc khi xem Video
+        if(video) {
+            video.addEventListener('play', () => { if (!audio.paused) audio.pause(); });
+            video.addEventListener('pause', () => { if (userWantsMusic) audio.play(); });
+            video.addEventListener('ended', () => { if (userWantsMusic) audio.play(); });
+        }
+
+        // Thử tự động phát nhạc lần đầu (khi chạm vào màn hình)
+        function tryAutoPlay() {
+            if (!userWantsMusic) {
+                audio.volume = 0.1; // Để nhỏ thôi cho đỡ giật mình
+                audio.play().then(() => {
+                    userWantsMusic = true;
+                    icon.innerText = "🔊";
+                    btn.style.animation = "pulse 2s infinite";
+                    // Đã phát được thì gỡ sự kiện này đi cho nhẹ máy
+                    ['click', 'scroll', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay));
+                }).catch(() => {});
+            }
+        }
+        ['click', 'scroll', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
+
+
+        // ============================================================
+        // 2. CÁC HIỆU ỨNG KHÁC (SAO BAY, LÌ XÌ, GIAN HÀNG...)
+        // ============================================================
+        
+        // --- SETUP SAO 3D ---
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x1a0000, 0.002); 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -438,6 +505,7 @@
         renderer.setPixelRatio(window.devicePixelRatio>2?2:window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
+        
         const geometry = new THREE.BufferGeometry();
         const count = 1000;
         const positions = new Float32Array(count*3);
@@ -457,7 +525,7 @@
         animate();
         window.addEventListener('resize', ()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
 
-        // --- 2. HIỆU ỨNG CHỮ ---
+        // --- HIỆU ỨNG CHỮ ---
         const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "Xuân Bính Ngọ 2026", "Vạn Sự Như Ý"];
         let index = 0; const textEl = document.getElementById('greeting-text');
         setInterval(() => {
@@ -472,34 +540,7 @@
         }, { threshold: 0.2 });
         document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
 
-        // --- 3. LOGIC NHẠC ---
-        document.addEventListener('DOMContentLoaded', function() {
-            var audio = document.getElementById("nhacNen");
-            var video = document.getElementById("traiVideo");
-            var btn = document.getElementById("musicBtn");
-            var icon = document.getElementById("musicIcon");
-            audio.volume = 0.09; var isMusicPlaying = false;
-            btn.addEventListener('click', function() {
-                if (isMusicPlaying) { audio.pause(); isMusicPlaying = false; icon.innerText = "🔇"; btn.style.animation = "none"; }
-                else { audio.play().then(() => { isMusicPlaying = true; icon.innerText = "🔊"; btn.style.animation = "pulse 2s infinite"; }).catch(e=>{}); }
-            });
-            if(video) {
-                video.addEventListener('play', function() { if (!audio.paused) { audio.pause(); } });
-                video.addEventListener('pause', function() { if (isMusicPlaying) { audio.play(); } });
-                video.addEventListener('ended', function() { if (isMusicPlaying) { audio.play(); } });
-            }
-            function tryAutoPlay() {
-                if (!isMusicPlaying) {
-                    audio.play().then(() => { isMusicPlaying = true; icon.innerText = "🔊"; btn.style.animation = "pulse 2s infinite"; ['click', 'scroll', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay)); }).catch(err => {});
-                }
-            }
-            ['click', 'scroll', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
-            document.addEventListener("visibilitychange", function() {
-                if (document.hidden) { audio.pause(); } else { if (isMusicPlaying) { audio.play(); } }
-            });
-        });
-
-        // --- 4. LOGIC MỞ RỘNG DANH SÁCH (ACCORDION) ---
+        // --- LOGIC MỞ RỘNG DANH SÁCH (ACCORDION) ---
         function toggleAccordion(btn) {
             btn.classList.toggle('active');
             var content = btn.nextElementSibling;
@@ -510,7 +551,7 @@
             }
         }
 
-        // --- 5. LOGIC LIGHTBOX (PHÓNG TO ẢNH) ---
+        // --- LOGIC LIGHTBOX (PHÓNG TO ẢNH) ---
         function openLightbox(src) {
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').classList.add('active');
