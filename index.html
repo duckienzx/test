@@ -431,66 +431,78 @@
 
     <script>
         // ============================================================
-        // 1. CẤU HÌNH NHẠC & TỰ ĐỘNG TẮT KHI RỜI TAB (FIX LỖI)
+        // 1. CẤU HÌNH NHẠC & XỬ LÝ TẮT NHẠC (PHIÊN BẢN CỨNG)
         // ============================================================
         const audio = document.getElementById("nhacNen");
         const video = document.getElementById("traiVideo");
         const btn = document.getElementById("musicBtn");
         const icon = document.getElementById("musicIcon");
         
-        // Biến theo dõi trạng thái: Người dùng có ĐANG MUỐN nghe nhạc không?
-        let userWantsMusic = false; 
+        let isUserPlaying = false; // Biến nhớ: Người dùng có đang bật nhạc không?
 
-        // Hàm bật/tắt nhạc khi bấm nút
+        // Hàm xử lý nút bấm
         btn.addEventListener('click', function() {
-            if (!audio.paused) {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    isUserPlaying = true;
+                    icon.innerText = "🔊";
+                    btn.style.animation = "pulse 2s infinite";
+                }).catch(err => console.log("Chưa được phép phát nhạc:", err));
+            } else {
                 audio.pause();
-                userWantsMusic = false;
+                isUserPlaying = false;
                 icon.innerText = "🔇";
                 btn.style.animation = "none";
-            } else {
-                audio.play().then(() => {
-                    userWantsMusic = true;
-                    icon.innerText = "🔊";
-                    btn.style.animation = "pulse 2s infinite";
-                }).catch(e => console.log("Chặn phát nhạc: ", e));
             }
         });
 
-        // 🔥 TÍNH NĂNG QUAN TRỌNG: TỰ ĐỘNG TẮT KHI RỜI TAB 🔥
-        document.addEventListener("visibilitychange", function() {
+        // --- XỬ LÝ KHI ẨN TAB / TẮT MÀN HÌNH ---
+        
+        function handleVisibilityChange() {
             if (document.hidden) {
-                // Khi người dùng ẩn tab / tắt màn hình -> BẮT BUỘC DỪNG
+                // Hễ ẩn tab là TẮT NGAY LẬP TỨC
                 audio.pause();
             } else {
-                // Khi quay lại -> Chỉ phát nếu trước đó người dùng ĐANG NGHE
-                if (userWantsMusic) {
-                    audio.play().catch(e => {});
+                // Khi mở lại: Chỉ phát nếu lúc trước người dùng ĐANG NGHE
+                if (isUserPlaying) {
+                    audio.play().catch(e => console.log("Lỗi tự phát lại:", e));
                 }
             }
+        }
+
+        // Bắt sự kiện ẩn tab (hoạt động tốt trên máy tính/Android)
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        // Bắt sự kiện thoát trang (hoạt động tốt trên iPhone/Safari)
+        window.addEventListener("pagehide", function() {
+            audio.pause();
         });
 
-        // Tự động tắt nhạc khi xem Video
-        if(video) {
-            video.addEventListener('play', () => { if (!audio.paused) audio.pause(); });
-            video.addEventListener('pause', () => { if (userWantsMusic) audio.play(); });
-            video.addEventListener('ended', () => { if (userWantsMusic) audio.play(); });
-        }
-
-        // Thử tự động phát nhạc lần đầu (khi chạm vào màn hình)
+        // --- TỰ ĐỘNG PHÁT LẦN ĐẦU (NẾU CÓ THỂ) ---
         function tryAutoPlay() {
-            if (!userWantsMusic) {
-                audio.volume = 0.1; // Để nhỏ thôi cho đỡ giật mình
+            // Chỉ thử phát nếu chưa ai bật
+            if (!isUserPlaying && audio.paused) {
+                audio.volume = 0.5;
                 audio.play().then(() => {
-                    userWantsMusic = true;
+                    isUserPlaying = true;
                     icon.innerText = "🔊";
                     btn.style.animation = "pulse 2s infinite";
-                    // Đã phát được thì gỡ sự kiện này đi cho nhẹ máy
-                    ['click', 'scroll', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay));
-                }).catch(() => {});
+                    // Thành công thì gỡ sự kiện ra cho nhẹ
+                    ['click', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay));
+                }).catch(() => {
+                    // Nếu lỗi (do trình duyệt chặn) thì kệ nó, chờ người dùng bấm nút
+                });
             }
         }
-        ['click', 'scroll', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
+        // Thử phát khi chạm vào màn hình bất kỳ đâu
+        ['click', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
+
+        // --- TẮT NHẠC KHI XEM VIDEO ---
+        if(video) {
+            video.addEventListener('play', () => { if(!audio.paused) audio.pause(); });
+            video.addEventListener('pause', () => { if(isUserPlaying) audio.play(); });
+            video.addEventListener('ended', () => { if(isUserPlaying) audio.play(); });
+        }
 
 
         // ============================================================
