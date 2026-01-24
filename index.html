@@ -538,7 +538,7 @@
         window.addEventListener('resize', ()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
 
         // --- HIỆU ỨNG CHỮ ---
-        const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "Xuân Bính Ngọ 2026", "Vạn Sự Như Ý"];
+        const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "Xuân Bính Ngọ 2026", "Vạn Sự Như Ý", "Phát Tài Phát Lộc"];
         let index = 0; const textEl = document.getElementById('greeting-text');
         setInterval(() => {
             gsap.to(textEl, {opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
