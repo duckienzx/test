@@ -7,11 +7,11 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;900&family=Pacifico&family=Pinyon+Script&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;800;900&family=Pacifico&family=Pinyon+Script&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
-           1. CẤU HÌNH GIAO DIỆN
+           1. CẤU HÌNH GIAO DIỆN CHUNG
            ========================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -34,10 +34,9 @@
         .music-icon { font-size: 24px; line-height: 1; }
         @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(253, 200, 48, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(253, 200, 48, 0); } }
 
-        /* Hero Section */
+        /* Hero Section (Phần đầu trang) */
         .hero-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10; }
         
-        /* CSS CHO TÊN LỚP */
         .class-name {
             font-family: 'Pinyon Script', cursive;
             font-size: 5rem; 
@@ -67,13 +66,16 @@
         .arrow { font-size: 1.5rem; color: #FDC830; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
 
-        /* Content Section */
+        /* Content Section (Phần nội dung chính) */
         .content-section { min-height: 100vh; padding: 50px 20px; z-index: 10; position: relative; display: flex; flex-direction: column; align-items: center; gap: 40px; padding-bottom: 150px; }
         .content-box {
             width: 100%; max-width: 800px; background: rgba(30, 0, 0, 0.85); 
             backdrop-filter: blur(20px); border: 2px solid rgba(255, 215, 0, 0.5); 
             border-radius: 30px; padding: 40px 30px; 
             box-shadow: 0 20px 60px rgba(0,0,0,0.6); opacity: 0; transform: translateY(50px); transition: all 1s ease;
+        }
+        @media (max-width: 480px) {
+            .content-box { padding-left: 15px !important; padding-right: 15px !important; }
         }
         .content-box.visible { transform: translateY(0); opacity: 1; }
         .box-title {
@@ -82,78 +84,65 @@
             display: inline-block; padding-bottom: 10px; text-align: center; width: 100%;
         }
         
-        /* --- CSS MỚI: GIAN HÀNG SANG TRỌNG (ROYAL GOLD) --- */
-        
-        /* 1. Phần Ảnh Menu */
+        /* --- CSS GIAN HÀNG & ẢNH --- */
         .menu-grid { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
         .img-wrapper {
-            width: 48%; /* Chia đôi màn hình */
-            display: flex; flex-direction: column; align-items: center;
+            width: 48%; display: flex; flex-direction: column; align-items: center;
         }
         .menu-thumb {
             width: 100%; border-radius: 10px; cursor: pointer; transition: transform 0.3s;
-            border: 2px solid #FDC830; object-fit: cover; aspect-ratio: 3/4;
+            border: 2px solid #FDC830; object-fit: cover;
         }
         .menu-thumb:hover { transform: scale(1.05); filter: brightness(1.1); }
         .img-caption {
-            margin-top: 15px; /* Đẩy chữ xuống xa ảnh hơn một chút */
-            color: #FDC830; font-weight: bold; font-size: 0.9rem;
+            margin-top: 15px; color: #FDC830; font-weight: bold; font-size: 0.9rem;
             text-align: center; text-transform: uppercase; letter-spacing: 0.5px;
             text-shadow: 0 2px 2px rgba(0,0,0,0.8);
         }
 
-        /* 2. Phần Accordion (Menu xổ xuống) */
+        /* --- CSS ACCORDION (MENU XỔ XUỐNG) --- */
         .accordion-container { width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
-        
         .accordion-item {
-            background: rgba(20, 0, 0, 0.6); /* Nền tối sang trọng */
+            background: rgba(20, 0, 0, 0.6);
             border: 1px solid rgba(253, 200, 48, 0.3);
             border-radius: 12px; overflow: hidden;
             transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .accordion-item:hover { border-color: #FDC830; box-shadow: 0 0 15px rgba(253, 200, 48, 0.15); }
-        
-        /* Nút bấm (Style mới: Chữ vàng, nền trong suốt) */
         .accordion-btn {
-            width: 100%; padding: 18px 20px;
+            width: 100%; padding: 15px 15px;
             background: transparent; color: #FDC830;
-            font-family: 'Playfair Display', serif; /* Font có chân */
-            font-size: 1.2rem; font-weight: 700;
-            text-transform: uppercase; text-align: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem; font-weight: 700; text-transform: uppercase; text-align: left;
             border: none; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            letter-spacing: 1px;
+            display: flex; justify-content: space-between; align-items: center; letter-spacing: 0.5px;
         }
         .accordion-btn:hover { background: rgba(253, 200, 48, 0.05); }
-        .accordion-btn .icon { font-size: 1.5rem; transition: transform 0.3s; color: #fff; font-weight: 300; }
+        .accordion-btn .icon { font-size: 1.5rem; transition: transform 0.3s; color: #fff; font-weight: 300; margin-left: 10px; flex-shrink: 0; }
         .accordion-btn.active .icon { transform: rotate(45deg); color: #FDC830; }
-        
+        .btn-text { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .accordion-content {
             max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
         .menu-list { list-style: none; padding: 0; margin: 0; }
         .menu-list li {
             padding: 15px 20px; border-bottom: 1px dashed rgba(255,255,255,0.1);
             display: flex; justify-content: space-between; align-items: center;
         }
         .menu-list li:last-child { border-bottom: none; }
-        
         .dish-name { font-size: 1rem; color: #eee; font-weight: 500; }
         .price-badge {
             background: rgba(255, 255, 255, 0.1); color: #fff;
-            padding: 4px 10px; border-radius: 6px;
-            font-weight: bold; font-size: 0.9rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            min-width: 50px; text-align: center;
+            padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2); min-width: 50px; text-align: center;
         }
         .price-badge.gold {
             background: #FDC830; color: #8b0000; border: none;
             box-shadow: 0 0 10px rgba(253, 200, 48, 0.4);
         }
 
-        /* Lightbox (Phóng to ảnh) */
+        /* Lightbox */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 10000;
@@ -170,29 +159,27 @@
             font-size: 40px; color: #fff; cursor: pointer; z-index: 10001;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        /* -------------------------------------------------- */
 
+        /* Video */
         .video-container { width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255, 215, 0, 0.3); background: #000; }
         video { width: 100%; height: auto; display: block; }
 
+        /* Danh sách (List Items) */
         .list-group { margin-bottom: 30px; padding: 0 10px; text-align: left; }
-        .category-title { color: #FDC830; font-size: 1.4rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; border-left: 5px solid #FDC830; padding-left: 15px; background: linear-gradient(90deg, rgba(253, 200, 48, 0.1), transparent); }
         .item-list { list-style: none; padding-left: 10px; }
         .item-list li { font-size: 1.2rem; color: #eee; margin-bottom: 15px; display: flex; align-items: flex-start; padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
         .item-list li strong { color: #fff; min-width: 130px; display: inline-block; flex-shrink: 0; }
         .item-list li::before { content: "✔"; color: #00ff00; margin-right: 15px; margin-top: 2px; flex-shrink: 0; }
         .signature { margin-top: 40px; text-align: center; font-style: italic; color: #bbb; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-
         @media (max-width: 768px) {
             .class-name { font-size: 1.5rem; letter-spacing: 3px; margin-bottom: -10px; }
             .year { font-size: 23vw; }
             .item-list li { flex-direction: column; }
             .item-list li::before { display: none; }
             .item-list li strong { color: #FDC830; margin-bottom: 5px; }
-            .item-list li strong::before { content: "✔ "; color: #00ff00; }
         }
 
-        /* 2. CSS BAO LÌ XÌ */
+        /* LÌ XÌ */
         .lixi-container { position: relative; width: 260px; height: 380px; margin: 0 auto; perspective: 1000px; cursor: pointer; user-select: none; filter: drop-shadow(0 18px 40px rgba(0,0,0,.55)); }
         .lixi-container:not(.open):hover { transform: translateY(-2px) rotateX(2deg); }
         .env-back { position: absolute; bottom: 0; width: 100%; height: 360px; background: #e60000; border-radius: 12px; z-index: 1; }
@@ -215,13 +202,6 @@
         .lixi-container.drop .card { transform: translateX(-50%) scale(0.6) translateY(-250px); }
         .lixi-container.final .card { z-index: 100; transform: translateX(-50%) scale(1) translateY(-60px); box-shadow: 0 0 80px rgba(212, 175, 55, 0.6); }
 
-        /* =========================================
-           3. CSS CHATBOT AI
-           ========================================= */
-        .ai-toggle-btn { position: fixed; bottom: 90px; right: 20px; width: 50px; height: 50px; background: linear-gradient(135deg, #00c6ff, #0072ff); border-radius: 50%; box-shadow: 0 5px 15px rgba(0,114,255,0.4); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 999; transition: transform 0.3s; animation: floatAI 3s ease-in-out infinite; }
-        .ai-toggle-btn:hover { transform: scale(1.1); } .ai-icon { font-size: 28px; } @keyframes floatAI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .chat-container { position: fixed; bottom: 100px; right: 80px; width: 300px; height: 400px; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); border: 1px solid #00c6ff; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; z-index: 999; transform: scale(0); transform-origin: bottom right; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: -5px 10px 30px rgba(0,0,0,0.5); }
-        .chat-container.active { transform: scale(1); } .chat-header { background: linear-gradient(90deg, #00c6ff, #0072ff); padding: 15px; color: white; font-weight: bold; display: flex; justify-content: space-between; align-items: center; } .close-chat { cursor: pointer; font-size: 20px; } .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; } .message { max-width: 80%; padding: 8px 12px; border-radius: 10px; font-size: 0.9rem; line-height: 1.4; } .bot-msg { align-self: flex-start; background: #333; color: #eee; border-bottom-left-radius: 2px; } .user-msg { align-self: flex-end; background: #0072ff; color: white; border-bottom-right-radius: 2px; } .chat-footer { padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 5px; } .chat-input { flex: 1; padding: 8px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: white; } .send-btn { background: none; border: none; color: #00c6ff; cursor: pointer; font-size: 18px; } .chat-body::-webkit-scrollbar { width: 5px; } .chat-body::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -261,10 +241,10 @@
             <h2 class="box-title">2. Đồ Trang Trí</h2>
             <div class="list-group">
                 <ul class="item-list">
-                    <li><strong>Mâm Ngũ Quả:</strong> <span>Gồm có: Dứa,Dưa Hấu, Bưởi, Quýt.</span></li>
-                    <li><strong>Câu Đối:</strong> <span>Trang trí hai bên mặt cổng trại .</span></li>
+                    <li><strong>Mâm Ngũ Quả:</strong> <span>Gồm có: Dứa, Dưa Hấu, Bưởi, Quýt.</span></li>
+                    <li><strong>Câu Đối:</strong> <span>Trang trí hai bên mặt cổng trại.</span></li>
                     <li><strong>Hoa Mai/Đào:</strong> <span>Đặt tại hai bên cổng.</span></li>
-                    <li><strong>Cờ Tổ Quốc:</strong> <span>Cắm bên phải cổng trại .</span></li>
+                    <li><strong>Cờ Tổ Quốc:</strong> <span>Cắm bên phải cổng trại.</span></li>
                 </ul>
             </div>
         </div>
@@ -279,37 +259,33 @@
                     <li><strong>Bàn Tiếp Khách:</strong> <span>Nơi đón tiếp thầy cô và giám khảo.</span></li>
                 </ul>
             </div>
-            
             <div class="signature">
-                Trại được dựng bởi. <br>
+                Trại được dựng bởi<br>
                 <strong>Tập thể Lớp 11B2</strong>
             </div>
         </div>
 
         <div class="content-box scroll-reveal" style="margin-top: 60px; max-width: 600px; margin-left: auto; margin-right: auto;">
-<h2 class="box-title" style="
-    font-family: 'Montserrat', sans-serif; 
-    font-size: clamp(1rem, 5vw, 2rem); /* 🔥 Tự động co giãn theo màn hình */
-    white-space: nowrap; /* Bắt buộc 1 dòng */
-    font-weight: 800;
-    color: #FDC830; 
-    text-align: center; 
-    width: 100%; 
-    text-shadow: 0 0 10px #FDC830; 
-    border-bottom: none; 
-    margin: 0 auto 15px auto; 
-    letter-spacing: 1px;">
-    ✨ GIAN HÀNG 11B2 ✨
-</h2>
-
+            <h2 class="box-title" style="
+                font-family: 'Montserrat', sans-serif; 
+                font-size: clamp(1rem, 5vw, 2rem);
+                white-space: nowrap; 
+                font-weight: 800;
+                color: #FDC830; 
+                text-align: center; 
+                width: 100%; 
+                text-shadow: 0 0 10px #FDC830; 
+                border-bottom: none; 
+                margin: 0 auto 15px auto; 
+                letter-spacing: 1px;">
+                ✨ GIAN HÀNG 11B2 ✨
+            </h2>
             
             <div class="menu-grid">
-                
                 <div class="img-wrapper" style="width: 70%;">
                     <img src="menu.png" class="menu-thumb" onclick="openLightbox(this.src)" alt="Menu 1">
                     <p class="img-caption">📜 Menu </p>
                 </div>
-
             </div>
             
             <p style="text-align: center; color: #FDC830; font-size: 0.8rem; margin-top: -10px; margin-bottom: 30px; opacity: 0.8; font-style: italic;">
@@ -317,7 +293,6 @@
             </p>
 
             <div class="accordion-container">
-                
                 <div class="accordion-item">
                     <button class="accordion-btn" onclick="toggleAccordion(this)">
                         <span class="btn-text">🥢 Thực Đơn Món Lẻ</span>
@@ -366,7 +341,6 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
 
             <div style="text-align: center; margin-top: 35px; position: relative;">
@@ -379,14 +353,9 @@
                 </p>
             </div>
         </div>
-
-        <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-            <span class="lightbox-close">&times;</span>
-            <img id="lightbox-img" class="lightbox-img" src="">
-        </div>
         
         <div class="content-box scroll-reveal">
-            <h2 class="box-title">Video quá trình làm trại</h2>
+            <h2 class="box-title">Video dựng trại</h2>
             <div class="video-container">
                 <video id="traiVideo" controls playsinline>
                     <source src="Video1.mp4" type="video/mp4">
@@ -407,7 +376,6 @@
                 <div class="card" id="card">
                     <img src="nguar.png" class="horse-deco horse-left" alt="Ngựa trái">
                     <img src="nguar.png" class="horse-deco horse-right" alt="Ngựa phải">
-
                     <span class="emoji">🧧</span>
                     <h2>Xuân Bính Ngọ</h2>
                     <p id="wish-content">...</p>
@@ -418,22 +386,58 @@
             </div>
         </div>
 
+        <div class="content-box scroll-reveal" style="margin-top: 50px;">
+            <h2 class="box-title">📸 Hình Ảnh Poster</h2>
+            
+            <p style="text-align: center; color: #ddd; margin-bottom: 20px;">
+                Quá trình sáng tạo đầy tâm huyết!
+            </p>
+
+            <div class="menu-grid" style="flex-wrap: wrap; justify-content: center; gap: 15px;">
+                
+                <div class="img-wrapper" style="width: 48%; margin-bottom: 15px;">
+                    <img src="anh1.jpg" class="menu-thumb" onclick="openLightbox(this.src)" alt="Hoạt động 1" style="aspect-ratio: 4/3;">
+                    <p class="img-caption" style="font-size: 0.8rem; margin-top: 5px;">Ảnh 1</p>
+                </div>
+
+                <div class="img-wrapper" style="width: 48%; margin-bottom: 15px;">
+                    <img src="anh2.jpg" class="menu-thumb" onclick="openLightbox(this.src)" alt="Hoạt động 2" style="aspect-ratio: 4/3;">
+                    <p class="img-caption" style="font-size: 0.8rem; margin-top: 5px;">Ảnh 2</p>
+                </div>
+
+                <div class="img-wrapper" style="width: 48%; margin-bottom: 15px;">
+                    <img src="anh3.jpg" class="menu-thumb" onclick="openLightbox(this.src)" alt="Hoạt động 3" style="aspect-ratio: 4/3;">
+                    <p class="img-caption" style="font-size: 0.8rem; margin-top: 5px;">Ảnh 3</p>
+                </div>
+
+                <div class="img-wrapper" style="width: 48%; margin-bottom: 15px;">
+                    <img src="anh4.jpg" class="menu-thumb" onclick="openLightbox(this.src)" alt="Hoạt động 4" style="aspect-ratio: 4/3;">
+                    <p class="img-caption" style="font-size: 0.8rem; margin-top: 5px;">Ảnh 4</p>
+                </div>
+            </div>
+             <p style="text-align: center; color: #bbb; font-size: 0.8rem; font-style: italic; margin-bottom: 40px;">
+                (Chạm vào ảnh để phóng to)
+            </p>
+
+            <div style="width: 60%; height: 1px; background: rgba(253, 200, 48, 0.3); margin: 0 auto 30px;"></div>
+
+            <h3 style="text-align: center; color: #FDC830; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 5px #FDC830;">
+                🎬 Video Poster
+            </h3>
+
+            <div class="video-container">
+                <video controls playsinline preload="metadata" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+                    <source src="videoposter.mp4" type="video/mp4">
+                    Trình duyệt không hỗ trợ video.
+                </video>
+            </div>
+        </div>
+
     </div>
-    
 
-
-    <div class="chat-container" id="chatBox">
-        <div class="chat-header">
-            <span>Học bá lớp 11B2 💢</span>
-            <span class="close-chat" onclick="toggleChat()">×</span>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="message bot-msg">Em chào Thầy/Cô và các bạn! Em là AI thông minh của lớp mình. Mọi người cần hỏi gì không ạ?</div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Nhập tin nhắn..." onkeypress="handleEnter(event)">
-            <button class="send-btn" onclick="sendMessage()">➤</button>
-        </div>
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" class="lightbox-img" src="">
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -444,13 +448,11 @@
         // 1. CẤU HÌNH NHẠC & XỬ LÝ TẮT NHẠC (PHIÊN BẢN CỨNG)
         // ============================================================
         const audio = document.getElementById("nhacNen");
-        const video = document.getElementById("traiVideo");
         const btn = document.getElementById("musicBtn");
         const icon = document.getElementById("musicIcon");
         
-        let isUserPlaying = false; // Biến nhớ: Người dùng có đang bật nhạc không?
+        let isUserPlaying = false; 
 
-        // Hàm xử lý nút bấm
         btn.addEventListener('click', function() {
             if (audio.paused) {
                 audio.play().then(() => {
@@ -466,60 +468,44 @@
             }
         });
 
-        // --- XỬ LÝ KHI ẨN TAB / TẮT MÀN HÌNH ---
-        
         function handleVisibilityChange() {
             if (document.hidden) {
-                // Hễ ẩn tab là TẮT NGAY LẬP TỨC
                 audio.pause();
             } else {
-                // Khi mở lại: Chỉ phát nếu lúc trước người dùng ĐANG NGHE
                 if (isUserPlaying) {
                     audio.play().catch(e => console.log("Lỗi tự phát lại:", e));
                 }
             }
         }
-
-        // Bắt sự kiện ẩn tab (hoạt động tốt trên máy tính/Android)
         document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("pagehide", function() { audio.pause(); });
 
-        // Bắt sự kiện thoát trang (hoạt động tốt trên iPhone/Safari)
-        window.addEventListener("pagehide", function() {
-            audio.pause();
-        });
-
-        // --- TỰ ĐỘNG PHÁT LẦN ĐẦU (NẾU CÓ THỂ) ---
         function tryAutoPlay() {
-            // Chỉ thử phát nếu chưa ai bật
             if (!isUserPlaying && audio.paused) {
                 audio.volume = 0.5;
                 audio.play().then(() => {
                     isUserPlaying = true;
                     icon.innerText = "🔊";
                     btn.style.animation = "pulse 2s infinite";
-                    // Thành công thì gỡ sự kiện ra cho nhẹ
                     ['click', 'touchstart'].forEach(evt => document.removeEventListener(evt, tryAutoPlay));
-                }).catch(() => {
-                    // Nếu lỗi (do trình duyệt chặn) thì kệ nó, chờ người dùng bấm nút
-                });
+                }).catch(() => {});
             }
         }
-        // Thử phát khi chạm vào màn hình bất kỳ đâu
         ['click', 'touchstart'].forEach(evt => document.addEventListener(evt, tryAutoPlay));
 
-        // --- TẮT NHẠC KHI XEM VIDEO ---
-        if(video) {
-            video.addEventListener('play', () => { if(!audio.paused) audio.pause(); });
-            video.addEventListener('pause', () => { if(isUserPlaying) audio.play(); });
-            video.addEventListener('ended', () => { if(isUserPlaying) audio.play(); });
-        }
-
+        // Tắt nhạc khi xem BẤT KỲ video nào
+        const allVideos = document.querySelectorAll('video');
+        allVideos.forEach(vid => {
+            vid.addEventListener('play', () => { if(!audio.paused) audio.pause(); });
+            vid.addEventListener('pause', () => { if(isUserPlaying) audio.play(); });
+            vid.addEventListener('ended', () => { if(isUserPlaying) audio.play(); });
+        });
 
         // ============================================================
-        // 2. CÁC HIỆU ỨNG KHÁC (SAO BAY, LÌ XÌ, GIAN HÀNG...)
+        // 2. HIỆU ỨNG 3D, TEXT, LÌ XÌ
         // ============================================================
         
-        // --- SETUP SAO 3D ---
+        // Stars
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x1a0000, 0.002); 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -547,7 +533,7 @@
         animate();
         window.addEventListener('resize', ()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
 
-        // --- HIỆU ỨNG CHỮ ---
+        // Greeting Text
         const greetings = ["Chúc Mừng Năm Mới", "Happy New Year", "Xuân Bính Ngọ 2026", "Vạn Sự Như Ý", "Phát Tài Phát Lộc"];
         let index = 0; const textEl = document.getElementById('greeting-text');
         setInterval(() => {
@@ -557,12 +543,14 @@
             }});
         }, 3000);
         gsap.from(".year", { duration: 2, y: -50, opacity: 0, ease: "power3.out" });
+
+        // Scroll Reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
         }, { threshold: 0.2 });
         document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
 
-        // --- LOGIC MỞ RỘNG DANH SÁCH (ACCORDION) ---
+        // Accordion
         function toggleAccordion(btn) {
             btn.classList.toggle('active');
             var content = btn.nextElementSibling;
@@ -573,7 +561,7 @@
             }
         }
 
-        // --- LOGIC LIGHTBOX (PHÓNG TO ẢNH) ---
+        // Lightbox
         function openLightbox(src) {
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').classList.add('active');
@@ -582,58 +570,18 @@
             document.getElementById('lightbox').classList.remove('active');
         }
 
-        // --- LÌ XÌ ---
+        // Lì Xì Logic
         const wishes = [
-            "Nhân dịp năm mới Bính Ngọ 2026, em xin kính chúc Thầy/Cô luôn dồi dào sức khỏe, thân tâm an lạc. Mong rằng mỗi ngày đến trường của Thầy/Cô đều là một ngày vui và tràn ngập hạnh phúc.",
-            "Sang năm mới, kính chúc Thầy/Cô có một bầu trời sức khỏe, một biển cả tình thương, một đại dương tình cảm và một gia đình thịnh vượng, vạn sự như ý.",
-            "Kính chúc Thầy/Cô và gia đình một năm mới An Khang Thịnh Vượng. Mong Thầy/Cô luôn giữ được nụ cười trên môi và sức khỏe dẻo dai để tiếp tục sự nghiệp trồng người vĩ đại.",
-            "Xuân đã về trên khắp mọi nẻo đường. Em kính chúc Thầy/Cô năm mới nhiều sức khỏe, luôn vui vẻ, bình an và hạnh phúc bên những người thân yêu.",
-            "Năm mới đến, em cầu chúc cho Thầy/Cô luôn được mạnh khỏe, bình an. Cảm ơn Thầy/Cô đã luôn là ngọn hải đăng soi sáng dẫn lối cho chúng em trên con đường tri thức.",
-            "Chúc Thầy/Cô năm mới: Đau đầu vì nhà giàu, mệt mỏi vì học giỏi, buồn phiền vì nhiều tiền, ngang trái vì xinh gái, và mất ngủ vì không có đối thủ!",
-            "Kính chúc Thầy/Cô năm mới: Sức khỏe vô biên, bệnh tật tiêu tan, vạn sự bình an, tỷ sự như mơ, làm việc như thơ, đời vui như nhạc.",
-            "Đầu xuân năm mới, kính chúc Thầy/Cô luôn tươi trẻ như hoa mùa xuân, khỏe mạnh như cây tùng bách và vững chãi như núi thái sơn để che chở cho đàn em nhỏ.",
-            "Mong rằng năm 2026 sẽ mang đến cho Thầy/Cô thật nhiều niềm vui bất ngờ, sức khỏe dẻo dai và những khoảnh khắc đáng nhớ bên gia đình và học trò.",
-            "Chúc Thầy/Cô năm mới tâm hồn luôn thanh thản, cuộc sống luôn bình yên, công việc luôn thuận lợi và gia đình luôn êm ấm.",
-            "Kính chúc Thầy/Cô một năm mới gặt hái được nhiều thành công rực rỡ. Mong Thầy/Cô luôn giữ vững ngọn lửa đam mê để tiếp tục dìu dắt chúng em đến bến bờ tri thức.",
-            "Năm mới Bính Ngọ, chúc Thầy/Cô luôn vững tay chèo, đưa thêm nhiều chuyến đò tri thức cập bến vinh quang. Chúng em mãi biết ơn công lao dạy dỗ của Thầy/Cô.",
-            "Chúc Thầy/Cô năm mới có thêm nhiều sáng kiến hay, nhiều bài giảng tuyệt vời để truyền cảm hứng cho bao thế hệ học trò. Chúc mừng năm mới!",
-            "Kính chúc Thầy/Cô năm nay lớp chủ nhiệm luôn chăm ngoan, học giỏi, đạt nhiều thành tích cao, để Thầy/Cô luôn tự hào và mỉm cười mỗi ngày.",
-            "Năm mới đến, chúc sự nghiệp giáo dục của Thầy/Cô ngày càng thăng hoa. Chúc Thầy/Cô đào tạo được thật nhiều nhân tài cho đất nước.",
-            "Chúc Thầy/Cô năm mới công tác tốt, được đồng nghiệp quý mến, phụ huynh tin tưởng và học sinh kính trọng. Vạn sự như ý, tỷ sự như mơ.",
-            "Mong Thầy/Cô luôn chân cứng đá mềm, vượt qua mọi khó khăn vất vả của nghề giáo để tiếp tục ươm mầm những hạt giống tốt cho đời.",
-            "Kính chúc Thầy/Cô năm mới bận rộn với những niềm vui, lo toan với những thành công và hạnh phúc với những lứa học trò trưởng thành.",
-            "Chúc Thầy/Cô năm mới: Soạn bài nhanh như chớp, chấm bài thoáng như mây, học sinh ngoan như cừu và thành tích cao như núi.",
-            "Năm 2026, chúc Thầy/Cô luôn là người truyền lửa vĩ đại nhất, thắp sáng ước mơ và hoài bão cho chúng em vững bước vào đời.",
-            "Không có nghề gì cao quý bằng nghề dạy học. Nhân dịp đầu xuân, chúng em xin gửi lời tri ân sâu sắc nhất đến Thầy/Cô. Chúc Thầy/Cô năm mới vạn sự an nhiên.",
-            "Cảm ơn Thầy/Cô đã luôn kiên nhẫn, bao dung và tận tụy với những đứa học trò 'nhất quỷ nhì ma'. Chúc Thầy/Cô năm mới thật nhiều niềm vui và hạnh phúc.",
-            "Dù đi bốn phương trời, chúng em vẫn mãi nhớ về mái trường xưa, về những bài giảng và tình yêu thương của Thầy/Cô. Chúc mừng năm mới!",
-            "Mỗi nét bút, mỗi trang văn đều thấm đẫm công ơn của Thầy/Cô. Chúng em xin hứa sẽ cố gắng học tập thật tốt để không phụ lòng mong mỏi ấy.",
-            "Thầy Cô chính là người cha, người mẹ thứ hai của chúng em. Kính chúc Thầy/Cô năm mới sức khỏe dồi dào, gia đình hạnh phúc, con cháu thảo hiền.",
-            "Mai đây khôn lớn, dù bay cao bay xa đến đâu, chúng em vẫn luôn nhớ về nơi này, nơi có Thầy/Cô đang ngày đêm miệt mài bên trang giáo án.",
-            "Thời gian có thể làm bạc thêm mái tóc Thầy, nhưng không thể làm phai mờ tình yêu thương mà Thầy dành cho chúng em. Chúc Thầy năm mới mạnh khỏe!",
-            "Cảm ơn Thầy/Cô đã gieo mầm tri thức, chắp cánh ước mơ cho chúng em. Chúc Thầy/Cô một năm mới tràn đầy năng lượng và nhiệt huyết.",
-            "Kính chúc Thầy/Cô năm mới: Gạt bỏ mọi muộn phiền, chỉ giữ lại niềm vui. Cảm ơn Thầy/Cô đã luôn là chỗ dựa tinh thần vững chắc cho chúng em.",
-            "Một chữ cũng là Thầy, nửa chữ cũng là Thầy. Nhân dịp Tết đến xuân về, em kính chúc Thầy/Cô luôn mạnh khỏe, bình an và hạnh phúc.",
-            "Tân niên tân phúc tân phú quý - Tấn tài tấn lộc tấn bình an. Chúc Thầy/Cô năm mới tiền vào như nước, tiền ra nhỏ giọt như cà phê phin!",
-            "Năm mới Bính Ngọ, chúc Thầy/Cô mã đáo thành công, đánh đâu thắng đó, tài lộc đầy nhà, gia đạo ấm êm, hạnh phúc viên mãn.",
-            "Chúc Thầy/Cô năm 2026: Đa lộc, đa tài, đa phú quý. Đắc thời, đắc lợi, đắc nhân tâm. Vạn sự hanh thông, toàn gia đại cát.",
-            "Kính chúc Thầy/Cô năm mới: Túi lúc nào cũng rủng rỉnh tiền, tim lúc nào cũng đong đầy tình, và nhà lúc nào cũng ngập tràn tiếng cười.",
-            "Chúc Thầy/Cô khai xuân đắc lộc, cả năm phát tài. Mong rằng năm nay Thầy/Cô sẽ gặp được thật nhiều may mắn và cơ hội mới.",
-            "Năm mới, chúc Thầy/Cô nhận được thật nhiều phong bao lì xì (tình cảm) từ học sinh, và thật nhiều phong bao tài lộc từ cuộc sống!",
-            "Chúc Thầy/Cô năm nay 'bội thu' những điểm 10 rực rỡ, và 'mất mùa' hoàn toàn những điểm kém. Chúc lớp mình luôn đứng nhất khối!",
-            "Chúc Thầy/Cô: Công danh thăng tiến, tiền bạc rủng rỉnh, tình duyên phơi phới, hạnh phúc ngập tràn, vạn sự bình an.",
-            "Xuân này hơn hẳn mấy xuân qua. Phúc lộc đưa nhau đến từng nhà. Vài lời cung chúc tân niên mới. Vạn sự an khang vạn sự lành.",
-            "Chúc Thầy/Cô năm mới: Hay ăn chóng béo, tiền nhiều như kẹo, tình chặt như keo, dẻo dai như mèo, mịn màng trắng trẻo!",
-            "Mùa xuân xin chúc - Khúc ca an bình - Năm mới phát tài - Vạn sự như ý - Già trẻ lớn bé - Đầy ắp tiếng cười - Trên mặt ngời ngời - Tràn đầy hạnh phúc.",
-            "Cung chúc tân niên - Sức khỏe vô biên - Thành công liên miên - Hạnh phúc triền miên - Túi luôn đầy tiền - Sung sướng như tiên.",
-            "Năm mới tết đến - Rước hên vào nhà - Quà cáp bao la - Mọi nhà no đủ - Vàng bạc đầy hũ - Gia chủ phát tài - Già trẻ gái trai - Sum vầy hạnh phúc.",
-            "Kính chúc Thầy Cô - Năm mới bình an - Sức khỏe dồi dào - Công danh sáng lạn - May mắn ngập tràn - Gia đình thịnh vượng.",
-            "Xuân về tết đến - Chúc Thầy chúc Cô - Sức khỏe dồi dào - Như dòng sông chảy - Sự nghiệp trồng người - Ngày càng tỏa sáng.",
-            "Bính Ngọ vừa sang - Hạnh phúc mênh mang - Ý chí vững vàng - Niềm vui rộn ràng - Tiền bạc lai láng - Sức khỏe cường tráng.",
-            "Chúc Thầy Cô giáo - Năm mới an khang - Dạy tốt học hay - Trò ngoan chắp cánh - Tương lai rạng ngời - Nước non sánh bước.",
-            "Đầu xuân năm mới - Chúc Cô trẻ mãi - Chúc Thầy đẹp trai - Lớp mình hăng hái - Học tập thật tài - Tương lai rộng mở.",
-            "Hoa đào nở rộ - Báo hiệu xuân sang - Chúc Thầy Cô giáo - Một năm an nhàn - Gặt hái vinh quang - Trọn niềm vui sướng.",
-            "Tết đến xuân về - Cầu cho Thầy Cô - Sức khỏe tràn trề - Công danh thỏa chí - Vạn sự như ý - Tỷ sự như mơ."
+            "Nhân dịp năm mới Bính Ngọ 2026, kính chúc Thầy/Cô dồi dào sức khỏe, vạn sự như ý.",
+            "Chúc Thầy/Cô năm mới An Khang Thịnh Vượng, gia đình hạnh phúc.",
+            "Kính chúc Thầy/Cô luôn giữ mãi ngọn lửa đam mê với nghề giáo.",
+            "Năm mới chúc Thầy/Cô: Tiền vào như nước, tiền ra nhỏ giọt!",
+            "Chúc tập thể 11B2 năm mới học giỏi, đoàn kết, 'cháy' hết mình!",
+            "Năm mới Bính Ngọ, mã đáo thành công, đánh đâu thắng đó!",
+            "Chúc Thầy/Cô năm mới nhận được nhiều niềm vui từ những lứa học trò ngoan.",
+            "Kính chúc Thầy/Cô sức khỏe vô biên, thành công liên miên.",
+            "Chúc mừng năm mới! 11B2 Vô Địch!",
+            "Năm mới bình an, tài lộc ngập tràn, cả năm may mắn."
         ];
         const lixiContainer = document.getElementById('lixiContainer');
         const wishContent = document.getElementById('wish-content');
